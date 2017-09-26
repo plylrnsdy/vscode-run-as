@@ -2,7 +2,7 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
     <Identity Language="en-US" Id="run-as" Version="0.3.10" Publisher="plylrnsdy"/>
-    <DisplayName>Simple Run</DisplayName>
+    <DisplayName>Run As</DisplayName>
     <Description xml:space="preserve">Right click a file to run as the paramster of command.</Description>
     <Tags></Tags>
     <Categories>Other</Categories>
