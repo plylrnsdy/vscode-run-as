@@ -1,0 +1,117 @@
+{
+    "name": "run-as",
+    "displayName": "Run as ...",
+    "description": "Right click a file to run as the paramster of command.",
+    "publisher": "plylrnsdy",
+    "version": "0.3.10",
+    "engines": {
+        "vscode": "^1.1.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "keywords": [
+        "execute",
+        "run",
+        "click"
+    ],
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.runas"
+    ],
+    "main": "out/extension.js",
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.runas",
+                "title": "Run as ..."
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "extension.runas",
+                    "group": "navigation@4"
+                }
+            ]
+        },
+        "configuration": {
+            "type": "object",
+            "title": "\"Run as ...\" Configuration",
+            "properties": {
+                "RunAs.runInNewTerminalWindows.enable": {
+                    "type": "boolean",
+                    "description": "Create a new shell window to execute command. ",
+                    "default": false
+                },
+                "RunAs.runInNewTerminalWindows.commands": {
+                    "type": "object",
+                    "description": "Command to create a new shell window in different platform. Windows: \"win32\", Linux: \"linux\", Mac OS: \"darwin\".",
+                    "default": {
+                        "win32": "start $0",
+                        "linux": "gnome-terminal -x bash -c '$1'"
+                    }
+                },
+                "RunAs.globsMapToCommand": {
+                    "type": "array",
+                    "description": "The file's path name which matches globs will run as the parameter of the command. ",
+                    "default": [
+                        {
+                            "globs": "*.*",
+                            "command": {
+                                "win32": "start $1",
+                                "linux": "see $1",
+                                "darwin": "open $1"
+                            },
+                            "exceptions": [
+                                {
+                                    "globs": "*.+(bat|cmd|exe)",
+                                    "command": "$1"
+                                },
+                                {
+                                    "globs": "*.js",
+                                    "command": "node $1",
+                                    "exceptions": [
+                                        {
+                                            "globs": "*.spec.js",
+                                            "command": "mocha $1"
+                                        }
+                                    ]
+                                },{
+                                    "globs": "*.sh",
+                                    "command": "$1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "__metadata": {
+        "id": "6461046e-a9c8-44e6-abab-c48276a68a09",
+        "publisherId": "7fdf942b-6fd2-438f-ad84-daa8718efb8c",
+        "publisherDisplayName": "plylrnsdy"
+    },
+    "dependencies": {
+        "minimatch": "^3.0.4"
+    },
+    "devDependencies": {
+        "@types/mocha": "^2.2.42",
+        "@types/node": "^7.0.43",
+        "mocha": "^3.5.0",
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.5"
+    },
+    "license": "MIT"
+}
