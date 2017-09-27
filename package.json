@@ -1,7 +1,7 @@
 {
     "name": "run-as",
     "displayName": "Run as ...",
-    "description": "Right click a file to run as the paramster of command.",
+    "description": "Right click a file to run as the parameter of command.",
     "publisher": "plylrnsdy",
     "version": "0.3.10",
     "engines": {
