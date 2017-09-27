@@ -8,8 +8,8 @@ export default {
     platform: process.platform,
 
     get(sections: string) {
-        // Error: vscode.workspace.getConfiguration('simple.run.mapFilePatternToCommand') -> {}
-        // Correct: vscode.workspace.getConfiguration('simple.run').mapFilePatternToCommand -> [...]
+        // Error: vscode.workspace.getConfiguration('runas.globsMapToCommand') -> {}
+        // Correct: vscode.workspace.getConfiguration('runas').run.globsMapToCommand -> globsToCommandMap[]
         let _sections: string[] = sections.split('.'),
             configs: object = vscode.workspace.getConfiguration(_sections[0])
 
