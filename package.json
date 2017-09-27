@@ -65,7 +65,7 @@
                         "globs": "*.*",
                         "command": {
                             "win32": "start $1",
-                            "linux": "see $1",
+                            "linux": "gnome-open $1",
                             "darwin": "open $1"
                         },
                         "exceptions": [{
