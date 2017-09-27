@@ -85,9 +85,7 @@ Opew VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
 
 ## Install
 
-```
-ext install run-as
-```
+Press `F1` in VSCode, type `ext install` and then look for `"Run as ..."` .
 
 ## Issue
 

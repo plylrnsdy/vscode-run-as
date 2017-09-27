@@ -30,8 +30,10 @@ export default class Runner {
         let matchedType: globsToCommandMap = this.search(file, types)
 
         let enableNewShell: boolean = this.config.get('RunAs.runInNewTerminalWindows.enable')
+        // TODO: 如果没有该平台下的命令，上方弹出提示
         let newShellCommand: string = this.config.get('RunAs.runInNewTerminalWindows.commands')[this.config.platform]
 
+        // TODO: 如果没有该平台下的命令，上方弹出提示
         let commandExp0 = typeof matchedType.command === 'string' ? matchedType.command : matchedType.command[this.config.platform]
         let commandExp1: string = (enableNewShell ? newShellCommand.replace(/\$0/, commandExp0) : commandExp0)
 

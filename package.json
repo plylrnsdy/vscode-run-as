@@ -5,7 +5,7 @@
     "publisher": "plylrnsdy",
     "version": "0.3.10",
     "engines": {
-        "vscode": "^1.1.0"
+        "vscode": "^1.12.0"
     },
     "repository": {
         "type": "git",
@@ -22,7 +22,7 @@
     "activationEvents": [
         "onCommand:extension.runas"
     ],
-    "main": "out/extension.js",
+    "main": "out/src/extension.js",
     "scripts": {
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
@@ -31,19 +31,15 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "contributes": {
-        "commands": [
-            {
-                "command": "extension.runas",
-                "title": "Run as ..."
-            }
-        ],
+        "commands": [{
+            "command": "extension.runas",
+            "title": "Run as ..."
+        }],
         "menus": {
-            "explorer/context": [
-                {
-                    "command": "extension.runas",
-                    "group": "navigation@4"
-                }
-            ]
+            "explorer/context": [{
+                "command": "extension.runas",
+                "group": "navigation@4"
+            }]
         },
         "configuration": {
             "type": "object",
@@ -65,35 +61,33 @@
                 "RunAs.globsMapToCommand": {
                     "type": "array",
                     "description": "The file's path name which matches globs will run as the parameter of the command. ",
-                    "default": [
-                        {
-                            "globs": "*.*",
-                            "command": {
-                                "win32": "start $1",
-                                "linux": "see $1",
-                                "darwin": "open $1"
+                    "default": [{
+                        "globs": "*.*",
+                        "command": {
+                            "win32": "start $1",
+                            "linux": "see $1",
+                            "darwin": "open $1"
+                        },
+                        "exceptions": [{
+                                "globs": "*.+(bat|cmd|exe)",
+                                "command": "$1"
                             },
-                            "exceptions": [
-                                {
-                                    "globs": "*.+(bat|cmd|exe)",
-                                    "command": "$1"
-                                },
-                                {
-                                    "globs": "*.js",
-                                    "command": "node $1",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.spec.js",
-                                            "command": "mocha $1"
-                                        }
-                                    ]
-                                },{
-                                    "globs": "*.sh",
-                                    "command": "$1"
-                                }
-                            ]
-                        }
-                    ]
+                            {
+                                "globs": "*.js",
+                                "command": "node $1",
+                                "exceptions": [{
+                                    "globs": "*.spec.js",
+                                    "command": "mocha $1"
+                                }]
+                            }, {
+                                "globs": "*.sh",
+                                "command": "$1"
+                            }, {
+                                "globs": "*.py",
+                                "command": "python $1"
+                            }
+                        ]
+                    }]
                 }
             }
         }
