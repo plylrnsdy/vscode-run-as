@@ -4,7 +4,7 @@
         "target": "es5",
         "rootDir": ".",
         "outDir": "out",
-        "sourceMap": true,
+        "sourceMap": false,
         "removeComments": true
     },
     "exclude": [
