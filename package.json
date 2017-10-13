@@ -31,15 +31,19 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test"
     },
     "contributes": {
-        "commands": [{
-            "command": "extension.runas",
-            "title": "Run as ..."
-        }],
-        "menus": {
-            "explorer/context": [{
+        "commands": [
+            {
                 "command": "extension.runas",
-                "group": "navigation@4"
-            }]
+                "title": "Run as ..."
+            }
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "extension.runas",
+                    "group": "navigation@4"
+                }
+            ]
         },
         "configuration": {
             "type": "object",
@@ -61,33 +65,40 @@
                 "RunAs.globsMapToCommand": {
                     "type": "array",
                     "description": "The file's path name which matches globs will run as the parameter of the command. ",
-                    "default": [{
-                        "globs": "*.*",
-                        "command": {
-                            "win32": "start $1",
-                            "linux": "gnome-open $1",
-                            "darwin": "open $1"
-                        },
-                        "exceptions": [{
-                                "globs": "*.+(bat|cmd|exe)",
-                                "command": "$1"
+                    "default": [
+                        {
+                            "globs": "*.*",
+                            "command": {
+                                "win32": "start $1",
+                                "linux": "gnome-open $1",
+                                "darwin": "open $1"
                             },
-                            {
-                                "globs": "*.js",
-                                "command": "node $1",
-                                "exceptions": [{
-                                    "globs": "*.spec.js",
-                                    "command": "mocha $1"
-                                }]
-                            }, {
-                                "globs": "*.sh",
-                                "command": "$1"
-                            }, {
-                                "globs": "*.py",
-                                "command": "python $1"
-                            }
-                        ]
-                    }]
+                            "exceptions": [
+                                {
+                                    "globs": "*.+(bat|cmd|exe)",
+                                    "command": "$1"
+                                },
+                                {
+                                    "globs": "*.js",
+                                    "command": "node $1",
+                                    "exceptions": [
+                                        {
+                                            "globs": "*.spec.js",
+                                            "command": "mocha $1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "globs": "*.sh",
+                                    "command": "$1"
+                                },
+                                {
+                                    "globs": "*.py",
+                                    "command": "python $1"
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
         }
@@ -103,6 +114,9 @@
     "devDependencies": {
         "@types/mocha": "^2.2.42",
         "@types/node": "^7.0.43",
+        "del": "^3.0.0",
+        "gulp": "^3.9.1",
+        "gulp-copy": "^1.0.1",
         "mocha": "^3.5.0",
         "typescript": "^2.5.2",
         "vscode": "^1.1.5"
