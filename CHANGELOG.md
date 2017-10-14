@@ -1,5 +1,12 @@
 # Change log
 
+## 1.2.1
+* `$0` replaced by `${command}`, `$1` replaced by `${file}`;
++ Javascript can be surrounded by `${` and `}` to execute;
++ Use `@out` an `@in` at the start of command to force to run in new terminal window or not;
++ Show error message when no command to execute in your platform;
+* Use new powershell command to execute command in new terminal window in `win32`.
+
 ## 0.3.10
 * Use TypeScript rewrite source code;
 * Execute command in `TERMINAL` panel instead of `OUTPUT` channel;

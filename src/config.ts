@@ -1,21 +1,59 @@
-import * as vscode from 'vscode'
+import * as minimatch from 'minimatch'
+import CommonConfig from './common/Config'
 
-export default {
+type globsToCommandMap = { globs?: string, enable?: boolean, command: string | { [platform: string]: string }, exceptions?: globsToCommandMap[] }
 
-    /**
-     * platform = 'win32' | 'linux' | 'darwin'
-     */
-    platform: process.platform,
+const MINIMATCH_OPTION = {
+    matchBase: true
+}
 
-    get(sections: string) {
-        // Error: vscode.workspace.getConfiguration('runas.globsMapToCommand') -> {}
-        // Correct: vscode.workspace.getConfiguration('runas').run.globsMapToCommand -> globsToCommandMap[]
-        let _sections: string[] = sections.split('.'),
-            configs: object = vscode.workspace.getConfiguration(_sections[0])
+let _platform
 
-        for (let i = 1; i < _sections.length; i++)
-            configs = configs[_sections[i]]
+export default class Config extends CommonConfig {
 
-        return configs
+    constructor(platform) {
+        super('RunAs')
+        _platform = platform
+    }
+
+    newWindowConfig() {
+        let fullWhichConfig = this.get('runInNewTerminalWindows')
+
+        return {
+            enable: fullWhichConfig.enable,
+            command: this.getCommand(fullWhichConfig)
+        }
+    }
+
+    getCommandByFile(file: string) {
+        let map = this.searchMap(file, this.get('globsMapToCommand'))
+
+        return this.getCommand(map)
+    }
+
+    private searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap {
+        let match: globsToCommandMap,
+            match2: globsToCommandMap
+
+        for (let type of types)
+            // FIXED: {matchBase: true}
+            if (minimatch(file, type.globs, MINIMATCH_OPTION)) {
+                match = type
+                match2 = type.exceptions ? this.searchMap(file, type.exceptions) : null
+                break
+            }
+        return match2 || match
+    }
+
+    private getCommand(map: globsToCommandMap): string {
+        let { command } = map
+
+        if (typeof command === 'string')
+            return command
+        else
+            if (command[_platform])
+                return command[_platform]
+            else
+                throw Error(`No command to execute to run file matched globs: " ${map.globs} " in your platform.`)
     }
 }
