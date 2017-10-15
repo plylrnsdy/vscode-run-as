@@ -2,11 +2,23 @@ const VARIABLE = /\$\{([^}]+)\}/g
 
 export default class Command {
 
-    private isInOuterShell
+    private isInOuterShell: boolean
 
     constructor(private command: string, private filePath: string, private newWindowConfig: { enable: boolean, command: string }) {
+        this.handleFilePathWhiteSpace()
         this.handleWhetherNewWindow()
         this.handleVariables()
+    }
+
+    private handleFilePathWhiteSpace() {
+        /**
+          * 命令行中路径中的空格字符串化（使用双引号包围）
+          * 
+          * win32: /Program" "Files/
+          * linus: /Program" "Files/ or /Program' 'Files/
+          * darwin: /Program" "Files/ or /Program' 'Files/ or /Program\ Files/
+          */
+        this.filePath = this.filePath.replace(/(\s+)/g, '"$1"').replace(/\\/g, '/')
     }
 
     private handleWhetherNewWindow() {

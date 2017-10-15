@@ -7,13 +7,10 @@ const MINIMATCH_OPTION = {
     matchBase: true
 }
 
-let _platform
-
 export default class Config extends CommonConfig {
 
-    constructor(platform) {
+    constructor(private platform) {
         super('RunAs')
-        _platform = platform
     }
 
     newWindowConfig() {
@@ -51,8 +48,8 @@ export default class Config extends CommonConfig {
         if (typeof command === 'string')
             return command
         else
-            if (command[_platform])
-                return command[_platform]
+            if (command[this.platform])
+                return command[this.platform]
             else
                 throw Error(`No command to execute to run file matched globs: " ${map.globs} " in your platform.`)
     }

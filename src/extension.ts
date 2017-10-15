@@ -1,16 +1,18 @@
 import * as fs from "fs"
 import * as path from 'path'
 import * as vscode from 'vscode'
-import * as message from './common/message'
+import Message from './common/Message'
 import Config from './Config'
 import Terminal from './common/Terminal'
 import Runner from './Runner'
 
+let message = new Message('Run As')
+
 let settingPath = path.join(__dirname, '../../package.json')
 let setting = JSON.parse(fs.readFileSync(settingPath, 'utf8'))
-if (setting.fristRun) {
-    message.show('[Run As] If you has config this extension configuration, you need to modify the user configuration to make sure it work correctly.')
-    setting.fristRun = false
+if (setting.firstRun) {
+    message.show('If you has config this extension configuration, you need to modify the user configuration to make sure it work correctly.')
+    setting.firstRun = false
     fs.writeFileSync(settingPath, JSON.stringify(setting))
 }
 
