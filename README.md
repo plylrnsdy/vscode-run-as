@@ -23,7 +23,7 @@ VSCode extension.
 
 After configuration, right Click a file, then select menu item "Run As ...".
 
-![preview](./images/preview.png)
+![preview](./images/run-in-inner-terminal.gif)
 
 ## Configuration
 
