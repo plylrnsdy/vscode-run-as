@@ -9,22 +9,23 @@ const MINIMATCH_OPTION = {
 
 export default class Config extends CommonConfig {
 
+    private maps: globsToCommandMap[]
+    public newWindowConfig: globsToCommandMap
+
     constructor(private platform) {
         super('RunAs')
-    }
-
-    newWindowConfig() {
-        let fullWhichConfig = this.get('runInNewTerminalWindows')
-
-        return {
-            enable: fullWhichConfig.enable,
-            command: this.getCommand(fullWhichConfig)
-        }
+        this.loadedListeners.push((configs) => {
+            this.maps = this.get('globsMapToCommand')
+            let fullNewWindowConfig = this.get('runInNewTerminalWindows')
+            this.newWindowConfig = {
+                enable: fullNewWindowConfig.enable,
+                command: this.getCommand(fullNewWindowConfig)
+            }
+        })
     }
 
     getCommandByFile(file: string) {
-        let map = this.searchMap(file, this.get('globsMapToCommand'))
-
+        let map = this.searchMap(file, this.maps)
         return this.getCommand(map)
     }
 

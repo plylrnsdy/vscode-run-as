@@ -3,14 +3,14 @@ import * as config from './config'
 
 export default class Terminal {
 
-    private name: string
     private terminal: vscode.Terminal
 
-    constructor(name) {
-        this.name = name
+    constructor(private name) {
         this.init()
-        // FIXED: 绑定事件监听只需一次
-        vscode.window.onDidCloseTerminal((closedTerminal) => {
+    }
+
+    initOnClose() {
+        return vscode.window.onDidCloseTerminal((closedTerminal) => {
             if (closedTerminal === this.terminal)
                 this.init()
         })

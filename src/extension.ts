@@ -18,14 +18,20 @@ if (setting.firstRun) {
 
 export function activate(context: vscode.ExtensionContext) {
 
-    let runner = new Runner(new Config(process.platform), new Terminal('Run As ...'), message)
+    let config = new Config(process.platform)
 
-    let disposable = vscode.commands.registerCommand('extension.runas', e => {
+    context.subscriptions.push(config.reloadOnConfigChange())
+
+    let terminal = new Terminal('Run As ...')
+
+    context.subscriptions.push(terminal.initOnClose())
+
+    let runner = new Runner(config, terminal, message)
+
+    context.subscriptions.push(vscode.commands.registerCommand('extension.runas', e => {
         if (e.fsPath)
             runner.run(e.fsPath)
-    })
-
-    context.subscriptions.push(disposable)
+    }))
 }
 
 export function deactivate() { }
