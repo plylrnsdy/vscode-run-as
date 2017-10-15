@@ -1,1 +1,1 @@
-# Hello World!
+# Open *.md in Typora

@@ -1,3 +1,2 @@
 @echo off
-echo Hello, world!
-pause
+echo Run *.bat as script in powershell

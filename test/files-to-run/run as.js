@@ -1,1 +1,1 @@
-console.log('Hello, world!')
+console.log('Run *.js as javascript in node')
