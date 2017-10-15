@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Language="en-US" Id="run-as" Version="1.2.1" Publisher="plylrnsdy"/>
     <DisplayName>Run As</DisplayName>
-    <Description xml:space="preserve">Right click a file to run as the parameter of command.</Description>
+    <Description xml:space="preserve">Right click a file to run as the parameter of command in terminal.</Description>
     <Tags></Tags>
     <Categories>Other</Categories>
     <GalleryFlags>Public</GalleryFlags>

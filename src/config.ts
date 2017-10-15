@@ -14,7 +14,7 @@ export default class Config extends CommonConfig {
 
     constructor(private platform) {
         super('RunAs')
-        this.loadedListeners.push((configs) => {
+        this.onLoaded((configs) => {
             this.maps = this.get('globsMapToCommand')
             let fullNewWindowConfig = this.get('runInNewTerminalWindows')
             this.newWindowConfig = {
