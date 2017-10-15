@@ -83,7 +83,7 @@ Opew VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
     ```
 
     In `"RunAs.runInNewTerminalWindows.commands"`,
-    - the key is platform string in VSCode, e.g. `"win32"`;
+    - the key is platform string in VSCode:
         - Windows: `"win32"`,
         - Linux: `"linux"`
         - Mac OS: `"darwin"`
