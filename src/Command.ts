@@ -39,13 +39,11 @@ export default class Command {
     private handleVariables() {
         let file = this.filePath
         this.commandMap.command = this.commandMap.command.replace(VARIABLE, (match, script) => {
-            let filePath
             try {
-                filePath = eval(script)
+                return eval(script)
             } catch (e) {
                 this.message.error(this.i18n.get('error.globsCommandWrong', this.commandMap.globs.replace(/\*/g, '\\*'), e.message))
             }
-            return filePath
         })
     }
 
@@ -53,13 +51,11 @@ export default class Command {
         let command = this.commandMap.command
         if (this.isInOuterShell)
             return this.newWindowConfig.command.replace(VARIABLE, (match, script) => {
-                let subCommand
                 try {
-                    subCommand = eval(script)
+                    return eval(script)
                 } catch (e) {
-                    this.message.error(this.i18n.get('error.outerTerminalCommandWrong', e.message))
+                    this.message.error(this.i18n.get('error.outerTerminalCommandWrong', this.newWindowConfig.name, e.message))
                 }
-                return subCommand
             })
         else
             return command

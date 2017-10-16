@@ -24,6 +24,7 @@ export default class Config extends CommonConfig {
             this.maps = this.get('globsMapToCommand')
             let fullNewWindowConfig = this.get('runInNewTerminalWindows')
             this.newWindowConfig = {
+                name: fullNewWindowConfig.name,
                 enable: fullNewWindowConfig.enable,
                 command: this.getCommand(fullNewWindowConfig)
             }

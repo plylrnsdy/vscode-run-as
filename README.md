@@ -98,7 +98,7 @@ Press `F1` in VSCode, type `ext install` and then look for `"Run as ..."` .
 
 ## Known Issue
 
-- You need close all terminal first after open vscode, otherwise this extension terminal can not show it's output in vscode 1.17. (It work correctly in vscode 1.16)
+- You need close terminal plane first after open vscode (if terminal is not running, you need not to do this), otherwise this extension terminal can not show it's output in vscode 1.17. (It work correctly in vscode 1.16)
 - I do not know how to pass a command to a new terminal to execute it in Mac OS, but you can configure it by yourself.
 
 ## Issues

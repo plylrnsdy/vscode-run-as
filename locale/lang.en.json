@@ -5,6 +5,6 @@
     "error": {
         "noCommandInThisPlatform": "`globs`: %s has no command to execute in your platform.",
         "globsCommandWrong": "`globs`: %s corresponding command is wrong: %s",
-        "outerTerminalCommandWrong": "\"New Terminal Window\" corresponding command is wrong: %s"
+        "outerTerminalCommandWrong": "\"%s\" corresponding command is wrong: %s"
     }
 }
