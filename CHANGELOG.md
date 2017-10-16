@@ -1,7 +1,9 @@
 # Change log
 
-## 1.3.3
-+ cache configuration before it change
+## 1.3.6
++ cache configuration before it change;
++ remind where is wrong;
++ support chinese.
 
 ## 1.2.1
 * `$0` replaced by `${command}`, `$1` replaced by `${file}`;

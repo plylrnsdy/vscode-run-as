@@ -1,0 +1,10 @@
+{
+    "info": {
+        "firstRun": "如果你曾经使用过此插件，你需要修改插件配置以使其能正常工作。（需要改变 `command` 中的变量名：$0 改为 ${command}，$1 改为 ${file}）"
+    },
+    "error": {
+        "noCommandInThisPlatform": "没有配置 `globs`: %s 在此平台运行的命令。",
+        "globsCommandWrong": "`globs`: %s 对应的命令有误: %s",
+        "outerTerminalCommandWrong": "\"New Terminal Window\" 对应的命令有误: %s"
+    }
+}

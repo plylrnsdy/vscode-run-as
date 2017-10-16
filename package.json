@@ -20,7 +20,7 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.runas"
+        "onCommand:extension.runAs"
     ],
     "main": "out/src/extension.js",
     "scripts": {
@@ -33,14 +33,14 @@
     "contributes": {
         "commands": [
             {
-                "command": "extension.runas",
-                "title": "Run As ..."
+				"title": "%command.runAs.title%",
+                "command": "extension.runAs"
             }
         ],
         "menus": {
             "explorer/context": [
                 {
-                    "command": "extension.runas",
+                    "command": "extension.runAs",
                     "group": "navigation@4"
                 }
             ]
@@ -51,7 +51,7 @@
             "properties": {
                 "RunAs.runInNewTerminalWindows": {
                     "type": "object",
-                    "description": "Command to create a new shell window in different platform. Windows: \"win32\", Linux: \"linux\", Mac OS: \"darwin\".",
+                    "description": "%RunAs.runInNewTerminalWindows.description%",
                     "default": {
                         "enable": false,
                         "name": "New Terminal Window",
@@ -63,7 +63,7 @@
                 },
                 "RunAs.globsMapToCommand": {
                     "type": "array",
-                    "description": "The file's path name which matches globs will run as the parameter of the command. ",
+                    "description": "%RunAs.globsMapToCommand.description%",
                     "default": [
                         {
                             "globs": "*.*",

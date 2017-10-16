@@ -8,7 +8,8 @@ export default class Command {
         private commandMap: { globs: string, command: string },
         private filePath: string,
         private newWindowConfig: { name: string, enable: boolean, command: string },
-        private message
+        private message,
+        private i18n
     ) {
         this.handleFilePath()
         this.handleWhetherNewWindow()
@@ -42,7 +43,7 @@ export default class Command {
             try {
                 filePath = eval(script)
             } catch (e) {
-                this.message.error(`globs: ${this.commandMap.globs.replace(/\*/g, '\\*')} corresponding command is wrong: ${e.message}`)
+                this.message.error(this.i18n.get('error.globsCommandWrong', this.commandMap.globs.replace(/\*/g, '\\*'), e.message))
             }
             return filePath
         })
@@ -56,7 +57,7 @@ export default class Command {
                 try {
                     subCommand = eval(script)
                 } catch (e) {
-                    this.message.error(`"${this.newWindowConfig.name}" corresponding command is wrong: ${e.message}`)
+                    this.message.error(this.i18n.get('error.outerTerminalCommandWrong', e.message))
                 }
                 return subCommand
             })

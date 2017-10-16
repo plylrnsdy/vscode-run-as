@@ -1,0 +1,5 @@
+{
+    "command.runAs.title": "运行为 ...",
+    "RunAs.runInNewTerminalWindows.description": "是否在点击“运行为...”时，使用外部终端运行命令；以及在不同平台（Windows: \"win32\", Linux: \"linux\", Mac OS: \"darwin\"）用于打开外部终端的命令。",
+    "RunAs.globsMapToCommand.description": "这是一棵树，每个节点是文件名模式（globs）到命令行（command，可以同时定义不同平台下的命令，但只会运行当前平台的命令）的映射。exceptions 数组中的映射节点是用于符合父节点文件名模式，但需要使用另外的命令行运行的文件（父文件模式的子集）。详细内容可见插件的介绍页。"
+}
