@@ -13,11 +13,19 @@ export default class Message {
         this.prefix = `[${extensionName}] `
     }
 
-    show(message: string) {
+    info(message: string) {
         vscode.window.showInformationMessage(this.prefix + message)
     }
 
+    warn(message: string) {
+        vscode.window.showWarningMessage(this.prefix + message)
+    }
+
     error(message: string) {
-        vscode.window.showErrorMessage(this.prefix + message)
+        try {
+            throw new Error(message)
+        } catch (e) {
+            vscode.window.showErrorMessage(this.prefix + message)
+        }
     }
 }

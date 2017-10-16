@@ -18,7 +18,7 @@ export default class Config extends CommonConfig {
     private maps: globsToCommandMap[]
     public newWindowConfig: globsToCommandMap
 
-    constructor(private platform) {
+    constructor(private platform, private message) {
         super('RunAs')
         this.onLoaded((configs) => {
             this.maps = this.get('globsMapToCommand')
@@ -60,6 +60,6 @@ export default class Config extends CommonConfig {
             if (command[this.platform])
                 return command[this.platform]
             else
-                throw new Error(`${globs ? globs.replace(/\*/g, '\\*') : name} has no command to execute in your platform.`)
+                this.message.error(`${globs ? globs.replace(/\*/g, '\\*') : name} has no command to execute in your platform.`)
     }
 }

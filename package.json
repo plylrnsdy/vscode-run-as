@@ -130,6 +130,5 @@
         "typescript": "^2.5.2",
         "vscode": "^1.1.5"
     },
-    "license": "MIT",
-    "firstRun": false
+    "license": "MIT"
 }

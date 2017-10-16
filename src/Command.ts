@@ -4,7 +4,12 @@ export default class Command {
 
     private isInOuterShell: boolean
 
-    constructor(private commandMap: { globs: string, command: string }, private filePath: string, private newWindowConfig: { enable: boolean, command: string }) {
+    constructor(
+        private commandMap: { globs: string, command: string },
+        private filePath: string,
+        private newWindowConfig: { name: string, enable: boolean, command: string },
+        private message
+    ) {
         this.handleFilePath()
         this.handleWhetherNewWindow()
         this.handleVariables()
@@ -37,7 +42,7 @@ export default class Command {
             try {
                 filePath = eval(script)
             } catch (e) {
-                throw new Error(`globs: ${this.commandMap.globs.replace(/\*/g, '\\*')} corresponding command is wrong: ${e.message}`)
+                this.message.error(`globs: ${this.commandMap.globs.replace(/\*/g, '\\*')} corresponding command is wrong: ${e.message}`)
             }
             return filePath
         })
@@ -47,7 +52,13 @@ export default class Command {
         let command = this.commandMap.command
         if (this.isInOuterShell)
             return this.newWindowConfig.command.replace(VARIABLE, (match, script) => {
-                return eval(script)
+                let subCommand
+                try {
+                    subCommand = eval(script)
+                } catch (e) {
+                    this.message.error(`"${this.newWindowConfig.name}" corresponding command is wrong: ${e.message}`)
+                }
+                return subCommand
             })
         else
             return command

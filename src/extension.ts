@@ -4,33 +4,35 @@ import * as vscode from 'vscode'
 import Message from './common/Message'
 import Config from './Config'
 import Terminal from './common/Terminal'
-import Runner from './Runner'
+import Command from './Command'
+
+const dataPath = path.join(__dirname, '../../data.json')
 
 let message = new Message('Run As')
+let config = new Config(process.platform, message)
+let terminal = new Terminal('Run As ...')
 
-let settingPath = path.join(__dirname, '../../package.json')
-let setting = JSON.parse(fs.readFileSync(settingPath, 'utf8'))
-if (setting.firstRun) {
-    message.show('If you has config this extension configuration, you need to modify the user configuration to make sure it work correctly.')
-    setting.firstRun = false
-    fs.writeFileSync(settingPath, JSON.stringify(setting))
-}
+if (isFirstRun()) remindUpdateConfig()
 
 export function activate(context: vscode.ExtensionContext) {
-    try {
-        let config = new Config(process.platform)
-        let terminal = new Terminal('Run As ...')
-        let runner = new Runner(config, terminal, message)
-
-        context.subscriptions.push(config.reloadOnConfigChange())
-        context.subscriptions.push(terminal.initOnClose())
-        context.subscriptions.push(vscode.commands.registerCommand('extension.runas', e => {
-            if (e.fsPath) runner.run(e.fsPath)
-        }))
-    } catch (e) {
-        // only catch first time running error
-        message.error(e.message)
-    }
+    context.subscriptions.push(config.reloadOnConfigChange())
+    context.subscriptions.push(terminal.initOnClose())
+    context.subscriptions.push(vscode.commands.registerCommand('extension.runas', e => {
+        if (e.fsPath) {
+            let commandExpression = config.getCommandMapByFile(e.fsPath),
+                command = new Command(commandExpression, e.fsPath, config.newWindowConfig as any, message)
+            terminal.exec(command.toString())
+        }
+    }))
 }
 
 export function deactivate() { }
+
+function isFirstRun() {
+    return JSON.parse(fs.readFileSync(dataPath, 'utf8')).isFirstRun
+}
+
+function remindUpdateConfig() {
+    message.info('If you has config this extension configuration, you need to modify the user configuration to make sure it work correctly.')
+    fs.writeFileSync(dataPath, JSON.stringify({ isFirstRun: false }))
+}
