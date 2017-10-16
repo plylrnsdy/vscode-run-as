@@ -1,7 +1,13 @@
 import * as minimatch from 'minimatch'
 import CommonConfig from './common/Config'
 
-type globsToCommandMap = { globs?: string, enable?: boolean, command: string | { [platform: string]: string }, exceptions?: globsToCommandMap[] }
+type globsToCommandMap = {
+    name?: string,
+    enable?: boolean,
+    globs?: string,
+    command: string | { [platform: string]: string },
+    exceptions?: globsToCommandMap[]
+}
 
 const MINIMATCH_OPTION = {
     matchBase: true
@@ -52,6 +58,6 @@ export default class Config extends CommonConfig {
             if (command[this.platform])
                 return command[this.platform]
             else
-                throw Error(`No command to execute to run file matched globs: " ${map.globs} " in your platform.`)
+                throw Error(`No command to execute to run file matched globs: " ${map.globs || map.name} " in your platform.`)
     }
 }

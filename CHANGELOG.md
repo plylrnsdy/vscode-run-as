@@ -1,5 +1,8 @@
 # Change log
 
+## 1.3.3
++ cache configuration before it change
+
 ## 1.2.1
 * `$0` replaced by `${command}`, `$1` replaced by `${file}`;
 + Javascript can be surrounded by `${` and `}` to execute;

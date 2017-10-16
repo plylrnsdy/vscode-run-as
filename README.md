@@ -5,18 +5,18 @@ VSCode extension.
 ## What can it do ?
 
 **Right Click a file**, then
-- Run as javascript in node
-  - Run as a simple javascript's test in node
-- Run as javascript's unit test in mocha
-- Run typescript source file as javascript in node
-- Run as script in shell
-  - Run a task by right-clicking a script instead of typing a command
-    - Run a server in a new terminal windows
-    - Run a watcher in a new terminal windows
+- Run `*.js` in node
+- Run `*.spec.js` in mocha
+- Run `*.ts` corresponding compiled `*.js` in node
+- Run `*.spec.ts` corresponding compiled `*spec.js` in mocha 
+- Run `*.bat`, `*.cmd`, `*.sh` in terminal
+  - to run a **task** by right-clicking a script instead of typing a command
+    - run a **server** in a new terminal windows
+    - run a **watcher** in a new terminal windows
     - and so on
-- Run as the parameter of application
-  - Open file with default application
-  - Open file with the application you like
+- Open `binary file`
+  - in default application
+  - in the application you like
 - and so on
 
 ## Useage
@@ -64,8 +64,8 @@ Opew VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
       - `${/* javascript */}` is surrounding a javascript code snippet, it can be:
         - `file`: the file path name which you right clicked, use it like: `${file}`.
             - `file` need not surround by `"`, white spaces in `<filePathName>` will be surrounded by `"` automatically.
-        - a javascript code snippet, use it like: `node ${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
-          - you need to use `\\` instead of `\` to **escape** character.
+        - a javascript code snippet, use it like: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
+          - you need to use `\\` instead of `\` to **escape** character in RegExp literal.
       - if you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
     - exceptions: A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
 
