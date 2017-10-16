@@ -1,9 +1,10 @@
 # Change log
 
-## 1.3.6
+## 1.3.7
 + cache configuration before it change;
 + remind where is wrong;
-+ support chinese.
++ support chinese;
++ new icon.
 
 ## 1.2.1
 * `$0` replaced by `${command}`, `$1` replaced by `${file}`;
