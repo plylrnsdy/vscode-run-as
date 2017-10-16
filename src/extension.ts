@@ -17,21 +17,20 @@ if (setting.firstRun) {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    try {
+        let config = new Config(process.platform)
+        let terminal = new Terminal('Run As ...')
+        let runner = new Runner(config, terminal, message)
 
-    let config = new Config(process.platform)
-
-    context.subscriptions.push(config.reloadOnConfigChange())
-
-    let terminal = new Terminal('Run As ...')
-
-    context.subscriptions.push(terminal.initOnClose())
-
-    let runner = new Runner(config, terminal, message)
-
-    context.subscriptions.push(vscode.commands.registerCommand('extension.runas', e => {
-        if (e.fsPath)
-            runner.run(e.fsPath)
-    }))
+        context.subscriptions.push(config.reloadOnConfigChange())
+        context.subscriptions.push(terminal.initOnClose())
+        context.subscriptions.push(vscode.commands.registerCommand('extension.runas', e => {
+            if (e.fsPath) runner.run(e.fsPath)
+        }))
+    } catch (e) {
+        // only catch first time running error
+        message.error(e.message)
+    }
 }
 
 export function deactivate() { }

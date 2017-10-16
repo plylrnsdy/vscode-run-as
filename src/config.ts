@@ -30,9 +30,12 @@ export default class Config extends CommonConfig {
         })
     }
 
-    getCommandByFile(file: string) {
+    getCommandMapByFile(file: string) {
         let map = this.searchMap(file, this.maps)
-        return this.getCommand(map)
+        return {
+            globs: map.globs,
+            command: this.getCommand(map)
+        }
     }
 
     private searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap {
@@ -49,8 +52,7 @@ export default class Config extends CommonConfig {
         return match2 || match
     }
 
-    private getCommand(map: globsToCommandMap): string {
-        let { command } = map
+    private getCommand({ name, globs, command }: globsToCommandMap): string {
 
         if (typeof command === 'string')
             return command
@@ -58,6 +60,6 @@ export default class Config extends CommonConfig {
             if (command[this.platform])
                 return command[this.platform]
             else
-                throw Error(`No command to execute to run file matched globs: " ${map.globs || map.name} " in your platform.`)
+                throw new Error(`${globs ? globs.replace(/\*/g, '\\*') : name} has no command to execute in your platform.`)
     }
 }
