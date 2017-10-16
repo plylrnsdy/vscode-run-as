@@ -1,6 +1,6 @@
 # Change log
 
-## 1.3.7
+## 1.6.4
 + cache configuration before it change;
 + remind where is wrong;
 + support chinese;

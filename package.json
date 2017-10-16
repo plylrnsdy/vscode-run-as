@@ -3,7 +3,7 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.3.7",
+    "version": "1.6.4",
     "engines": {
         "vscode": "^1.16.0"
     },
