@@ -1,22 +1,13 @@
 const
-    gulp = require('gulp'),
-    del = require('del'),
-    copyTo = require('gulp-copy'),
-    version = require('./package.json').version,
-    os = require('os')
+    gulp = require('gulp')
 
-const extDir = `${os.homedir()}\\.vscode\\extensions`
 
-gulp.task('uninstall', () => {
-    return del('/plylrnsdy.run-as-*/{.*,*.*,!(node_modules)/**}', {
-        root: extDir,
-        force: true
-    })
-})
+gulp.task('default', () => { })
 
-gulp.task('install', ['uninstall'], () => {
-    return gulp.src(['**/*', '.vsixmanifest',
-            '!node_modules/**',
-            '!out/test/**', '!src/**', '!test/**', 'gulpfile.js', '!tsconfig.json'])
-        .pipe(copyTo(`${extDir}\\plylrnsdy.run-as-${version}`))
-})
+gulp.task('compile', require('./.gulp/compile-ts')())
+
+gulp.task('compile:watch', ['compile'], require('./.gulp/watcher')({ globs: '{src,test}/**/*.ts', outExtension: '.js' }, ['compile']))
+
+gulp.task('test', require('./.gulp/unit-test')())
+
+gulp.task('clean', require('./.gulp/clean')())

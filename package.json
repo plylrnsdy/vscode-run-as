@@ -33,7 +33,7 @@
     "contributes": {
         "commands": [
             {
-				"title": "%command.runAs.title%",
+                "title": "%command.runAs.title%",
                 "command": "extension.runAs"
             }
         ],
