@@ -7,6 +7,9 @@
         "sourceMap": false,
         "removeComments": true
     },
+    "include": [
+        "**/*.ts"
+    ],
     "exclude": [
         "node_modules",
         ".vscode-test"

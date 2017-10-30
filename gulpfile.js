@@ -1,13 +1,19 @@
 const
-    gulp = require('gulp')
+    os = require('os'),
+    { name, version } = require('./package.json'),
+    gulp = require('gulp'),
+    del = require('del'),
+    copyTo = require('gulp-copy')
+
+const
+    author = 'plylrnsdy',
+    extRoot = `${os.homedir()}\\.vscode\\extensions`,
+    oldExt = `/${author}.${name}-*/{.*,*.*,!(node_modules)/**}`,
+    newExt = `${extRoot}/${author}.${name}-${version}`
 
 
-gulp.task('default', () => { })
+gulp.task('uninstall', require('./.gulp/ext-uninstall')(oldExt, extRoot))
 
-gulp.task('compile', require('./.gulp/compile-ts')())
+gulp.task('install', ['uninstall'], require('./.gulp/ext-install')(newExt))
 
-gulp.task('compile:watch', ['compile'], require('./.gulp/watcher')({ globs: '{src,test}/**/*.ts', outExtension: '.js' }, ['compile']))
-
-gulp.task('test', require('./.gulp/unit-test')())
-
-gulp.task('clean', require('./.gulp/clean')())
+gulp.task('install:watch', ['uninstall'], require('./.gulp/watcher')({ globs: 'out/**/*' }, ['install']))
