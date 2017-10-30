@@ -7,14 +7,10 @@ import Config from './Config'
 import Terminal from './common/Terminal'
 import Command from './Command'
 
-const dataPath = path.join(__dirname, '../../data.json')
-
 let message = new Message('Run As')
 let i18n = new i18nConstructor('en', vscode.env.language, path.join(__dirname, '../../locale/lang.%s.json'))
 let config = new Config(process.platform, message, i18n)
 let terminal = new Terminal('Run As ...')
-
-if (isFirstRun()) remindUpdateConfig()
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(config.reloadOnConfigChange())
@@ -29,12 +25,3 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() { }
-
-function isFirstRun() {
-    return JSON.parse(fs.readFileSync(dataPath, 'utf8')).isFirstRun
-}
-
-function remindUpdateConfig() {
-    message.info(i18n.get('info.firstRun'))
-    fs.writeFileSync(dataPath, JSON.stringify({ isFirstRun: false }))
-}
