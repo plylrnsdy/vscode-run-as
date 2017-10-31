@@ -1,30 +1,18 @@
-const VARIABLE = /\$\{([^}]+)\}/g
+const VARIABLE = /\$\{((?:\$\{.*\}|[^}])+)\}/g
 
-export default class Command {
+let WORKSPACE, MESSAGE, I18N
+
+class Command {
 
     private isInOuterShell: boolean
 
     constructor(
         private commandMap: { globs: string, command: string },
         private filePath: string,
-        private newWindowConfig: { name: string, enable: boolean, command: string },
-        private message,
-        private i18n
+        private newWindowConfig: { name: string, enable: boolean, command: string }
     ) {
-        this.handleFilePath()
         this.handleWhetherNewWindow()
         this.handleVariables()
-    }
-
-    private handleFilePath() {
-        /**
-          * 命令行中路径中的空格字符串化（使用双引号包围）
-          * 
-          * win32: /Program" "Files/
-          * linus: /Program" "Files/ or /Program' 'Files/
-          * darwin: /Program" "Files/ or /Program' 'Files/ or /Program\ Files/
-          */
-        this.filePath = this.filePath.replace(/(\s+)/g, '"$1"').replace(/\\/g, '/')
     }
 
     private handleWhetherNewWindow() {
@@ -37,14 +25,22 @@ export default class Command {
     }
 
     private handleVariables() {
-        let file = this.filePath
+        let file = this.escapeWhiteSpace(this.filePath)
+        let [root, rPath] = WORKSPACE.partitionPath(this.filePath)
+        root = this.escapeWhiteSpace(root)
+        rPath = this.escapeWhiteSpace(rPath)
+        let [, dir, lFile, sFile, ext] = rPath.match(/(.*?)[\/\\\\](([^\/\\\\]+?)\.(\w+))$/)
         this.commandMap.command = this.commandMap.command.replace(VARIABLE, (match, script) => {
             try {
                 return eval(script)
             } catch (e) {
-                this.message.error(this.i18n.get('error.globsCommandWrong', this.commandMap.globs.replace(/\*/g, '\\*'), e.message))
+                MESSAGE.error(I18N.get('error.globsCommandWrong', this.commandMap.globs.replace(/\*/g, '\\*'), e.message))
             }
         })
+    }
+
+    private escapeWhiteSpace(fsPath: string): string {
+        return fsPath.replace(/(\s+)/g, '"$1"')
     }
 
     toString(): string {
@@ -54,10 +50,17 @@ export default class Command {
                 try {
                     return eval(script)
                 } catch (e) {
-                    this.message.error(this.i18n.get('error.outerTerminalCommandWrong', this.newWindowConfig.name, e.message))
+                    MESSAGE.error(I18N.get('error.outerTerminalCommandWrong', this.newWindowConfig.name, e.message))
                 }
             })
         else
             return command
     }
+}
+
+export default function init(workspace, message, i18n) {
+    WORKSPACE = workspace
+    MESSAGE = message
+    I18N = i18n
+    return Command
 }

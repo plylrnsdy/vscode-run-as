@@ -13,12 +13,14 @@ const MINIMATCH_OPTION = {
     matchBase: true
 }
 
-export default class Config extends CommonConfig {
+let MESSAGE, I18N
+
+class Config extends CommonConfig {
 
     private maps: globsToCommandMap[]
     public newWindowConfig: globsToCommandMap
 
-    constructor(private platform, private message, private i18n) {
+    constructor(private platform) {
         super('RunAs')
         this.onLoaded((configs) => {
             this.maps = this.get('globsMapToCommand')
@@ -61,6 +63,12 @@ export default class Config extends CommonConfig {
             if (command[this.platform])
                 return command[this.platform]
             else
-                this.message.error(this.i18n.get('error.noCommandInThisPlatform', globs ? globs.replace(/\*/g, '\\*') : name))
+                MESSAGE.error(I18N.get('error.noCommandInThisPlatform', globs ? globs.replace(/\*/g, '\\*') : name))
     }
+}
+
+export default function init(message, i18n) {
+    MESSAGE = message
+    I18N = i18n
+    return Config
 }

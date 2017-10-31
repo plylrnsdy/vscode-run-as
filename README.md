@@ -41,12 +41,18 @@ Opew VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
         },
         "exceptions": [
             {
-                "globs": "*.+(bat|cmd|exe)",
-                "command": "@out ${file}"
+                "globs": "*.@(bat|cmd|exe)",
+                "command": "${file}",
+                    "exceptions": [
+                        {
+                            "globs": "*.watcher.@(bat|cmd)",
+                            "command": "@out ${file}"
+                        }
+                    ]
             },
             {
                 "globs": "**/@(src|test)/**/*.ts",
-                "command": "node ${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}",
+                "command": "node ${`${root}/out/${dir}/${sFile}.js`}",
                 "exceptions": [
                    {
                         "globs": "*.spec.ts",
@@ -62,10 +68,18 @@ Opew VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
     - command: The command run in shell after selecting menu item "Run as ...".
       - command can be a general command or a platform-to-command map, just like `"node ${file}"` or `{ "win32": "start ${file}", "linux": "see ${file}", "darwin": "open ${file}" }`.
       - `${/* javascript */}` is surrounding a javascript code snippet, it can be:
-        - `file`: the file path name which you right clicked, use it like: `${file}`.
+        - a variable, use it like: `${file}`, the file path name which you right clicked.
             - `file` need not surround by `"`, white spaces in `<filePathName>` will be surrounded by `"` automatically.
+        - a template string, use it like: `` ${`${root}/out/${dir}/${sFile}.js`} ``
+            - `file` path, example: `D:\projects\project\src\common\module.ts`
+            - `root`, the folder opened in vscode: `D:\projects\project`
+            - `rPath`, the relative path from `root` to file: `src\common\module.ts`
+            - `dir`, the relative path from `root` to file's directory: `src\common`
+            - `lFile`, the file's name with extension: `module.ts`
+            - `sFile`, the file's name without extension: `module`
+            - `ext`, the file's extension: `ts`
         - a javascript code snippet, use it like: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
-          - you need to use `\\` instead of `\` to **escape** character in RegExp literal.
+            - you need to use `\\` instead of `\` to **escape** character in RegExp literal.
       - if you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
     - exceptions: A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Language="en-US" Id="run-as" Version="1.6.4" Publisher="plylrnsdy"/>
+    <Identity Language="en-US" Id="run-as" Version="1.7.0" Publisher="plylrnsdy"/>
     <DisplayName>Run As</DisplayName>
     <Description xml:space="preserve">Right click a file to run as the parameter of command in terminal.</Description>
     <Tags></Tags>
@@ -9,7 +9,7 @@
     <GalleryFlags>Public</GalleryFlags>
     <Badges></Badges>
     <Properties>
-      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.16.0" />
+      <Property Id="Microsoft.VisualStudio.Code.Engine" Value="^1.17.0" />
       <Property Id="Microsoft.VisualStudio.Code.ExtensionDependencies" Value="" />
       
         <Property Id="Microsoft.VisualStudio.Services.Links.Source" Value="https://github.com/plylrnsdy/vscode-run-as" />

@@ -1,5 +1,8 @@
 # Change log
 
+## 1.7.0
++ new variables to construct file path: `root`, `rPath`, `dir`, `lFile`, `sFile`, `ext`.
+
 ## 1.6.4
 + cache configuration before it change;
 + remind where is wrong;
