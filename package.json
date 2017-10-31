@@ -125,7 +125,9 @@
         "@types/node": "^7.0.43",
         "del": "^3.0.0",
         "gulp": "^3.9.1",
+        "gulp-changed": "^3.1.1",
         "gulp-copy": "^1.0.1",
+        "gulp-typescript": "^3.2.3",
         "mocha": "^3.5.0",
         "typescript": "^2.5.2",
         "vscode": "^1.1.5"
