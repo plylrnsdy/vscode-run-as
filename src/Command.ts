@@ -29,7 +29,7 @@ class Command {
         let [root, rPath] = WORKSPACE.partitionPath(this.filePath)
         root = this.escapeWhiteSpace(root)
         rPath = this.escapeWhiteSpace(rPath)
-        let [, dir, lFile, sFile, ext] = rPath.match(/(.*?)[\/\\\\](([^\/\\\\]+?)\.(\w+))$/)
+        let [, dir, lFile, sFile, ext] = rPath.match(/(.*?)[\/\\]?(([^\/\\]+?)\.(\w+))$/)
         this.commandMap.command = this.commandMap.command.replace(VARIABLE, (match, script) => {
             try {
                 return eval(script)

@@ -1,5 +1,8 @@
 # Change log
 
+## 1.7.1
+* Fix can not run the file in root folder.
+
 ## 1.7.0
 + new variables to construct file path: `root`, `rPath`, `dir`, `lFile`, `sFile`, `ext`.
 
