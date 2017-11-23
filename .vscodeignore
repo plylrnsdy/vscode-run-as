@@ -1,6 +1,7 @@
 .vscode/**
 .vscode-test/**
 .tasks/**
+bin/**
 out/test/**
 test/**
 src/**

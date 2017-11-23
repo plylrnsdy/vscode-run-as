@@ -20,4 +20,4 @@ gulp.task('install:copy', ['uninstall'], require('./.gulp/ext-install')(newExt))
 
 gulp.task('install', ['install:copy'], shell.task('npm install --production', { cwd: newExt }))
 
-gulp.task('install:watch', ['uninstall'], require('./.gulp/watcher')({ globs: 'out/src/**/*' }, ['install']))
+gulp.task('install:watch', require('./.gulp/watcher')({ globs: 'out/src/**/*' }, ['install']))

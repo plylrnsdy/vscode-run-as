@@ -27,7 +27,7 @@ After configuration, right Click a file, then select menu item "Run As ...".
 
 ## Configuration
 
-Opew VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
+Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
 
 1. Globs-to-command mapping
 
