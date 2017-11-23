@@ -10,7 +10,8 @@ type globsToCommandMap = {
 }
 
 const MINIMATCH_OPTION = {
-    matchBase: true
+    matchBase: true,
+    dot: true
 }
 
 let MESSAGE, I18N

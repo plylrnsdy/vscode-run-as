@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Language="en-US" Id="run-as" Version="1.7.0" Publisher="plylrnsdy"/>
+    <Identity Language="en-US" Id="run-as" Version="1.7.2" Publisher="plylrnsdy"/>
     <DisplayName>Run As</DisplayName>
     <Description xml:space="preserve">Right click a file to run as the parameter of command in terminal.</Description>
     <Tags></Tags>

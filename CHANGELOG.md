@@ -1,16 +1,20 @@
 # Change log
 
+## 1.7.2
+* Fix can not run the file if the path contains dot;
+* Use icon.
+
 ## 1.7.1
 * Fix can not run the file in root folder.
 
 ## 1.7.0
-+ new variables to construct file path: `root`, `rPath`, `dir`, `lFile`, `sFile`, `ext`.
++ New variables to construct file path: `root`, `rPath`, `dir`, `lFile`, `sFile`, `ext`.
 
 ## 1.6.4
-+ cache configuration before it change;
-+ remind where is wrong;
-+ support chinese;
-+ new icon.
++ Cache configuration before it change;
++ Remind where is wrong;
++ Support chinese;
++ New icon.
 
 ## 1.2.1
 * `$0` replaced by `${command}`, `$1` replaced by `${file}`;
