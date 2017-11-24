@@ -73,7 +73,7 @@ Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
         - or a platform-to-command map, example: `{ "win32": "start ${file}", "linux": "see ${file}", "darwin": "open ${file}" }`.
     - `${/* javascript */}` is surrounding a javascript code snippet, it can be:
         - a variable, example: `${file}`
-        - a template string, example: `` ${`${root}/out/${dir}/${sFile}.js`} ``
+        - a template string, example: `` ${`${root}/out/${dir}/${sFile}.js`} `` <br/>
             | variable | meaning                                          | example                                   |
             | -------- | ------------------------------------------------ | ----------------------------------------- |
             | `file`    | full path of the file which you right clicked    | `D:\projects\project\src\common\module.ts` |
