@@ -3,10 +3,10 @@ const
     del = require('del')
 
 
-module.exports = (oldExt, extRoot) => {
+module.exports = (patterns, root) => {
     return () => {
-        return del(oldExt, {
-            root: extRoot,
+        return del(patterns, {
+            root: root,
             force: true
         })
     }
