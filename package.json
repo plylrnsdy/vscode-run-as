@@ -25,10 +25,11 @@
     ],
     "main": "out/src/extension.js",
     "scripts": {
-        "vscode:prepublish": "npm run compile",
+        "postinstall": "node ./node_modules/vscode/bin/install",
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
-        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+        "test": "npm run compile && node ./node_modules/vscode/bin/test",
+        "vscode:prepublish": "npm run compile"
     },
     "contributes": {
         "commands": [
