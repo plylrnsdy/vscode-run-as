@@ -74,13 +74,13 @@ Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
     - `${/* javascript */}` is surrounding a javascript code snippet, it can be:
         - a variable, example: `${file}`
         - a template string, example: `` ${`${root}/out/${dir}/${sFile}.js`} ``
-            - see [Table:Variable-Meaning](#Table:Variable-Meaning)
+            - see [TABLE-Variable-Meaning](#TABLE-Variable-Meaning)
         - a javascript code snippet, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
             - you need to use `\\` instead of `\` to **escape** character in RegExp literal.
     - if you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
 - exceptions: A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
 
-#### Table:Variable-Meaning
+#### TABLE-Variable-Meaning
 | variable | meaning                                          | example                                   |
 | -------- | ------------------------------------------------ | ----------------------------------------- |
 | `file`    | full path of the file which you right clicked    | `D:\projects\project\src\common\module.ts` |
