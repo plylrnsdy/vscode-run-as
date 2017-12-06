@@ -22,10 +22,6 @@ export default class Message {
     }
 
     error(message: string) {
-        try {
-            throw new Error(message)
-        } catch (e) {
-            vscode.window.showErrorMessage(this.prefix + message)
-        }
+        vscode.window.showErrorMessage(this.prefix + message)
     }
 }

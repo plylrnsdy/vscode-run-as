@@ -1,32 +1,41 @@
 import * as minimatch from 'minimatch'
 import CommonConfig from './common/Config'
 
-type globsToCommandMap = {
-    name?: string,
+type nameToCommandMap = {
+    name: string,
     enable?: boolean,
-    globs?: string,
-    command: string | { [platform: string]: string },
-    exceptions?: globsToCommandMap[]
+    command: string | { [platform: string]: string }
 }
+type globsToCommandMap = {
+    globs: string,
+    command: string | { [platform: string]: string },
+    exceptions: globsToCommandMap[]
+}
+type CommandMap = nameToCommandMap | globsToCommandMap
 
+let MESSAGE, I18N
 const MINIMATCH_OPTION = {
     matchBase: true,
     dot: true
 }
 
-let MESSAGE, I18N
-
 class Config extends CommonConfig {
 
     private maps: globsToCommandMap[]
-    public newWindowConfig: globsToCommandMap
+    changeCwd: nameToCommandMap
+    newWindow: nameToCommandMap
 
-    constructor(private platform) {
+    constructor() {
         super('RunAs')
         this.onLoaded((configs) => {
             this.maps = this.get('globsMapToCommand')
+            let fullChangeCwdConfig = this.get('changeCwd')
+            this.changeCwd = {
+                name: fullChangeCwdConfig.name,
+                command: this.getCommand(fullChangeCwdConfig)
+            }
             let fullNewWindowConfig = this.get('runInNewTerminalWindows')
-            this.newWindowConfig = {
+            this.newWindow = {
                 name: fullNewWindowConfig.name,
                 enable: fullNewWindowConfig.enable,
                 command: this.getCommand(fullNewWindowConfig)
@@ -41,13 +50,11 @@ class Config extends CommonConfig {
             command: this.getCommand(map)
         }
     }
-
     private searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap {
         let match: globsToCommandMap,
             match2: globsToCommandMap
 
         for (let type of types)
-            // FIXED: {matchBase: true}
             if (minimatch(file, type.globs, MINIMATCH_OPTION)) {
                 match = type
                 match2 = type.exceptions ? this.searchMap(file, type.exceptions) : null
@@ -56,15 +63,15 @@ class Config extends CommonConfig {
         return match2 || match
     }
 
-    private getCommand({ name, globs, command }: globsToCommandMap): string {
-
-        if (typeof command === 'string')
-            return command
+    private getCommand(map: CommandMap): string {
+        if (typeof map.command === 'string')
+            return map.command
         else
-            if (command[this.platform])
-                return command[this.platform]
+            if (map.command[process.platform])
+                return map.command[process.platform]
             else
-                MESSAGE.error(I18N.get('error.noCommandInThisPlatform', globs ? globs.replace(/\*/g, '\\*') : name))
+                MESSAGE.error(I18N.get('error.noCommandInThisPlatform',
+                    (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs.replace(/\*/g, '\\*') : (<nameToCommandMap>map).name))
     }
 }
 

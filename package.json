@@ -3,7 +3,7 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.7.2",
+    "version": "1.8.0",
     "engines": {
         "vscode": "^1.17.0"
     },
@@ -50,6 +50,14 @@
             "type": "object",
             "title": "\"Run As ...\" Configuration",
             "properties": {
+                "RunAs.changeCwd": {
+                    "type": "object",
+                    "description": "%RunAs.changeCwd.description%",
+                    "default": {
+                        "name": "Change Current Working Directory",
+                        "command": "cd ${cwd}"
+                    }
+                },
                 "RunAs.runInNewTerminalWindows": {
                     "type": "object",
                     "description": "%RunAs.runInNewTerminalWindows.description%",

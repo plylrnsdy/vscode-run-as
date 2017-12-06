@@ -66,19 +66,36 @@ Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
 }]
 ```
 
-- [globs](https://github.com/isaacs/node-glob): A pattern to match file's path name.
-- command: The command run in shell after selecting menu item "Run as ...".
-    - command can be
-        - a general command, example: `"node ${file}"`
-        - or a platform-to-command map, example: `{ "win32": "start ${file}", "linux": "see ${file}", "darwin": "open ${file}" }`.
-    - `${/* javascript */}` is surrounding a javascript code snippet, it can be:
-        - a variable, example: `${file}`
-        - a template string, example: `` ${`${root}/out/${dir}/${sFile}.js`} ``
-            - see [TABLE-Variable-Meaning](#TABLE-Variable-Meaning)
-        - a javascript code snippet, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
-            - you need to use `\\` instead of `\` to **escape** character in RegExp literal.
-    - if you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
-- exceptions: A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
+#### 1.1 [globs](https://github.com/isaacs/node-glob)
+
+A pattern to match file's path name.
+
+#### 1.2 command
+
+The command run in shell after selecting menu item "Run as ...".
+
+**1.2.1 command template(s)**
+
+- a general command, example: `"node ${file}"`
+- or a platform-to-command map, example: `{ "win32": "start ${file}", "linux": "see ${file}", "darwin": "open ${file}" }`.
+
+**1.2.2 command argument: path**
+
+a javascript code snippet, it looks like `${/* javascript */}`. it can be: 
+
+1. a **variable**, example: `${file}`
+2. a **template string**, example: `` ${`${root}/out/${dir}/${sFile}.js`} ``
+    - see: [TABLE-Variable-Meaning](#TABLE-Variable-Meaning)
+3. a **javascript code snippet**, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
+    - PS: you need to use `\\` instead of `\` to _escape_ character in RegExp literal.
+
+**1.2.3 command prefix: `@in`, `@out`**
+
+if you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
+
+#### 1.3 exceptions
+
+A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
 
 #### TABLE-Variable-Meaning
 | variable | meaning                                          | example                                   |

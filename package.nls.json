@@ -1,5 +1,6 @@
 {
     "command.runAs.title": "Run As ...",
+    "RunAs.changeCwd.description": "Command to Change you vscode inner terminal's current working directory.",
     "RunAs.runInNewTerminalWindows.description": "Command to create a new shell window in different platform. Windows: \"win32\", Linux: \"linux\", Mac OS: \"darwin\".",
     "RunAs.globsMapToCommand.description": "This is a tree, which node is a map from `globs` to `command` (can define command in different platform). The mapping node in array `exception` is for the file (is subset of it's parent globs) match it's parent globs but need to run it own command. (More detail in extension introduction page)"
 }

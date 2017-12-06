@@ -5,6 +5,7 @@
     "error": {
         "noCommandInThisPlatform": "没有配置 `globs`: %s 在此平台运行的命令。",
         "globsCommandWrong": "`globs`: %s 对应的命令有误: %s",
+        "changeCwdCommandWrong": "\"%s\" 对应的命令有误: %s",
         "outerTerminalCommandWrong": "\"%s\" 对应的命令有误: %s"
     }
 }

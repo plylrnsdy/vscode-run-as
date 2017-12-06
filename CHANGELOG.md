@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.0
++ Auto change current working directory of vscode inner terminal in workspace(multi-directories mode).
+
 ## 1.7.2
 * Fix can not run the file if the path contains dot;
 * Use icon.

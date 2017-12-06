@@ -3,29 +3,32 @@ import * as vscode from 'vscode'
 export default class Config {
 
     protected configs: object
-    public loadedListeners: Array<(config: any) => void>
+    protected loadedListeners: Array<(config: any) => void> = []
 
+    /**
+     * Construct a Configuration with VSCode extension namespace.
+     * @param extNamespace 
+     */
     constructor(private extNamespace: string) {
-        this.loadedListeners = []
         this.loadNamespace()
     }
 
-    reloadOnConfigChange() {
+    reloadOnConfigChange(): vscode.Disposable {
         return vscode.workspace.onDidChangeConfiguration((config) => {
             this.loadNamespace()
         })
     }
 
-    protected loadNamespace() {
+    protected loadNamespace(): void {
+        // load configuration with top namespace
         this.configs = vscode.workspace.getConfiguration(this.extNamespace)
-
+        // emit event 'load'
         for (let callback of this.loadedListeners)
             callback(this.configs)
     }
 
-    onLoaded(callback: (config: any) => void) {
+    onLoaded(callback: (config: any) => void): void {
         this.loadedListeners.push(callback)
-        // FIXED：loadNamespace() 后加入的 callback 在下次 DidChangeConfiguration 前没有被调用
         callback(this.configs)
     }
 
@@ -35,7 +38,6 @@ export default class Config {
         let _sections: string[] = sections.split('.'),
             _configs = this.configs
 
-        // FIXED: 使用了 this.configs 迭代取出变量，而不是局部变量
         for (let i = 0; i < _sections.length; i++)
             _configs = _configs[_sections[i]]
 
