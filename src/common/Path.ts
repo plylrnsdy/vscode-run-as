@@ -61,7 +61,7 @@ export default class Path {
      * @memberof Path
      */
     static wrapWhiteSpace(path: string): string {
-        return path.replace(/([\/\\])([^\/\\]+)(?=[\/\\]|$)/g, (match, $0, $1) => {
+        return path.replace(/(^|[\/\\])([^\/\\]+)(?=[\/\\]|$)/g, (match, $0, $1) => {
             if (!/"/.test($1) && /\s/.test($1))
                 return `${$0}"${$1}"`
             else
