@@ -1,5 +1,7 @@
 import * as vscode from 'vscode'
 
+const createTerminal = vscode.window.createTerminal
+
 export default class Terminal {
 
     private _terminal: vscode.Terminal
@@ -18,17 +20,10 @@ export default class Terminal {
         this.init()
     }
 
-    initOnClose() {
-        return vscode.window.onDidCloseTerminal((closedTerminal) => {
-            if (closedTerminal === this._terminal)
-                this.init()
-        })
+    init(): void {
+        this._terminal = createTerminal(this.name)
     }
 
-    private init(): void {
-        this._terminal = vscode.window.createTerminal(this.name)
-    }
-    
     /**
      * Execute ${command} in VSCode inner Terminal.
      * @param {string} command 

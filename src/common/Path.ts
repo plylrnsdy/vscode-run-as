@@ -1,6 +1,8 @@
 import * as PATH from 'path'
 import * as vscode from 'vscode'
 
+const { getWorkspaceFolder, asRelativePath } = vscode.workspace
+
 export default class Path {
 
     private _fsPath: string
@@ -28,7 +30,7 @@ export default class Path {
      */
     root(): string {
         if (!this._root)
-            this._root = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(this._fsPath)).uri.fsPath
+            this._root = getWorkspaceFolder(vscode.Uri.file(this._fsPath)).uri.fsPath
         return this._root
     }
     /**
@@ -38,7 +40,7 @@ export default class Path {
      */
     asRelative(): string {
         if (!this._relative)
-            this._relative = vscode.workspace.asRelativePath(this._fsPath, false)
+            this._relative = asRelativePath(this._fsPath, false)
         return this._relative
     }
     /**

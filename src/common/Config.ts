@@ -1,5 +1,7 @@
 import * as vscode from 'vscode'
 
+const getConfiguration = vscode.workspace.getConfiguration
+
 export default class Config {
 
     protected configs: object
@@ -13,21 +15,15 @@ export default class Config {
         this.loadNamespace()
     }
 
-    reloadOnConfigChange(): vscode.Disposable {
-        return vscode.workspace.onDidChangeConfiguration((config) => {
-            this.loadNamespace()
-        })
-    }
-
-    protected loadNamespace(): void {
+    loadNamespace(): void {
         // load configuration with top namespace
-        this.configs = vscode.workspace.getConfiguration(this.extNamespace)
+        this.configs = getConfiguration(this.extNamespace)
         // emit event 'load'
         for (let callback of this.loadedListeners)
             callback(this.configs)
     }
 
-    onLoaded(callback: (config: Config) => void): void {
+    onDidLoad(callback: (config: Config) => void): void {
         this.loadedListeners.push(callback)
         callback(this)
     }
@@ -36,9 +32,10 @@ export default class Config {
         // Error: vscode.workspace.getConfiguration('runas.globsMapToCommand') -> {}
         // Correct: vscode.workspace.getConfiguration('runas').run.globsMapToCommand -> globsToCommandMap[]
         let _sections: string[] = sections.split('.'),
+            _length = _sections.length,
             _configs = this.configs
 
-        for (let i = 0; i < _sections.length; i++)
+        for (let i = 0; i < _length; i++)
             _configs = _configs[_sections[i]]
 
         return _configs

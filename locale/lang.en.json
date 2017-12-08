@@ -1,6 +1,6 @@
 {
     "error": {
-        "noCommandInThisPlatform": "${commandId} has no command to execute in your platform.",
-        "commandParsedFail": "${commandId} corresponding command is wrong: ${message}"
+        "noCommandInThisPlatform": "`${commandId}` has no command to execute in your platform.",
+        "commandParsedFail": "`${commandId}` corresponding command is wrong: ${message}"
     }
 }

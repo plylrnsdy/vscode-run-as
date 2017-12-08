@@ -1,5 +1,7 @@
 import * as vscode from 'vscode'
 
+const { showInformationMessage, showWarningMessage, showErrorMessage } = vscode.window
+
 export default class Message {
 
     private prefix: string
@@ -14,14 +16,14 @@ export default class Message {
     }
 
     info(message: string) {
-        vscode.window.showInformationMessage(this.prefix + message)
+        showInformationMessage(this.prefix + message)
     }
 
     warn(message: string) {
-        vscode.window.showWarningMessage(this.prefix + message)
+        showWarningMessage(this.prefix + message)
     }
 
     error(message: string) {
-        vscode.window.showErrorMessage(this.prefix + message)
+        showErrorMessage(this.prefix + message)
     }
 }

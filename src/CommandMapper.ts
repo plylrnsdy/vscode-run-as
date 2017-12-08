@@ -13,35 +13,28 @@ export type globsToCommandMap = {
 }
 export type CommandMap = nameToCommandMap | globsToCommandMap
 
+
+const MINIMATCH_OPTION = { matchBase: true, dot: true },
+    platform = process.platform
+
 export let changeCwd: nameToCommandMap
 export let newWindow: nameToCommandMap
 export let maps: globsToCommandMap[]
 
 export function load(configs) {
-    let fullChangeCwdConfig = configs.get('changeCwd'),
-        fullNewWindowConfig = configs.get('runInNewTerminalWindows')
-
-    changeCwd = {
-        name: fullChangeCwdConfig.name,
-        command: getCommand(fullChangeCwdConfig)
-    }
-    newWindow = {
-        name: fullNewWindowConfig.name,
-        enable: fullNewWindowConfig.enable,
-        command: getCommand(fullNewWindowConfig)
-    }
+    changeCwd = configs.get('changeCwd')
+    changeCwd.command = getCommand(changeCwd)
+    newWindow = configs.get('runInNewTerminalWindows')
+    newWindow.command = getCommand(newWindow)
     maps = configs.get('globsMapToCommand')
 }
 
-export function getByFile(file: string):globsToCommandMap {
+export function getByFile(file: string): globsToCommandMap {
     let map = searchMap(file, maps)
-    return {
-        globs: map.globs,
-        command: getCommand(map)
-    }
-}
 
-const MINIMATCH_OPTION = { matchBase: true, dot: true }
+    map.command = getCommand(map)
+    return map
+}
 
 function searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap {
     let match: globsToCommandMap,
@@ -51,17 +44,18 @@ function searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap 
         if (minimatch(file, type.globs, MINIMATCH_OPTION)) {
             match = type
             match2 = type.exceptions ? searchMap(file, type.exceptions) : null
-            break
+            return match2 || match
         }
-    return match2 || match
 }
 
 export function getCommand(map: CommandMap): string {
-    if (typeof map.command === 'string')
-        return map.command
+    let command = map.command
+
+    if (typeof command === 'string')
+        return command
     else
-        if (map.command[process.platform])
-            return map.command[process.platform]
+        if (command[platform])
+            return command[platform]
         else
             throw {
                 type: 'error.noCommandInThisPlatform',
