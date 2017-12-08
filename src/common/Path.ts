@@ -28,7 +28,7 @@ export default class Path {
      */
     root(): string {
         if (!this._root)
-            this._root = Path.wrapWhiteSpace(vscode.workspace.getWorkspaceFolder(vscode.Uri.file(this._fsPath)).uri.fsPath)
+            this._root = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(this._fsPath)).uri.fsPath
         return this._root
     }
     /**

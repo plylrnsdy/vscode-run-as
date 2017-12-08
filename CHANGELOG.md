@@ -1,5 +1,10 @@
 # Change log
 
+## 1.8.3
+* less duplicated code;
+* low module has less dependencies;
+* new error handler to interrupt program when having an error.
+
 ## 1.8.0
 + Auto change current working directory of vscode inner terminal in workspace(multi-directories mode).
 

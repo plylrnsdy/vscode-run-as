@@ -27,9 +27,9 @@ export default class Config {
             callback(this.configs)
     }
 
-    onLoaded(callback: (config: any) => void): void {
+    onLoaded(callback: (config: Config) => void): void {
         this.loadedListeners.push(callback)
-        callback(this.configs)
+        callback(this)
     }
 
     get(sections: string): any {

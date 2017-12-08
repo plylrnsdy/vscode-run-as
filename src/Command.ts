@@ -1,58 +1,48 @@
 import Path from './common/Path'
+import * as mapper from './CommandMapper'
+import { CommandMap, globsToCommandMap, nameToCommandMap } from './CommandMapper'
 
-const VARIABLE = /\$\{((?:\$\{.*\}|[^}])+)\}/g
 
-let CONFIG, MESSAGE, I18N
+export default class Command {
 
-class Command {
-
-    private commandMap
-    private isInOuterShell: boolean
-
-    constructor(private filePath: Path) {
-        this.commandMap = CONFIG.getCommandMapByFile(filePath.fsPath())
-        this.handleWhetherNewWindow()
-        this.handleVariables()
+    static cd(cwd:string, wd?: string){
+        if (wd !== cwd)
+            return Command.parseTemplate(mapper.changeCwd, (script) => { return eval(script) })
     }
 
-    private handleWhetherNewWindow() {
-        this.isInOuterShell = CONFIG.newWindow.enable
-        this.commandMap.command = this.commandMap.command.replace(/^@(out|in)\s+/, (match, $switch) => {
-            if ($switch === 'out') this.isInOuterShell = true
-            else if ($switch === 'in') this.isInOuterShell = false
+    static run(filePath: Path): string {
+        let map = mapper.getByFile(filePath.fsPath())
+        // handle prefix: @in, @out
+        let isInOuterShell = mapper.newWindow.enable
+        map.command = (<string>map.command).replace(/^@(out|in)\s+/, (match, $switch) => {
+            if ($switch === 'out') isInOuterShell = true
+            else if ($switch === 'in') isInOuterShell = false
             return ''
         })
-    }
-
-    private handleVariables() {
-        let [file, root, rPath, dir, lFile, sFile, ext] = this.filePath.partitions()
-        this.commandMap.command = this.commandMap.command.replace(VARIABLE, (match, script) => {
-            try {
-                return Path.unifiedSeparator(Path.wrapWhiteSpace(eval(script)))
-            } catch (e) {
-                MESSAGE.error(I18N.get('error.globsCommandWrong', this.commandMap.globs.replace(/\*/g, '\\*'), e.message))
-            }
+        // handle variables: ${`javascript`}
+        map.command = Command.parseTemplate(map, (script) => {
+            let [file, root, rPath, dir, lFile, sFile, ext] = filePath.partitions()
+            return Path.unifiedSeparator(Path.wrapWhiteSpace(eval(script)))
         })
-    }
-
-    toString(): string {
-        let command = this.commandMap.command
-        if (this.isInOuterShell)
-            return CONFIG.newWindow.command.replace(VARIABLE, (match, script) => {
-                try {
-                    return eval(script)
-                } catch (e) {
-                    MESSAGE.error(I18N.get('error.outerTerminalCommandWrong', CONFIG.newWindow.name, e.message))
-                }
-            })
+        // handle command
+        let command = map.command
+        if (isInOuterShell)
+            return Command.parseTemplate(mapper.newWindow, (script) => { return eval(script) })
         else
             return command
     }
-}
 
-export default function init(config, message, i18n) {
-    CONFIG = config
-    MESSAGE = message
-    I18N = i18n
-    return Command
+    static parseTemplate(map: CommandMap, parser: (variable: string) => string): string {
+        return (<string>map.command).replace(/\$\{((?:\$\{.*\}|[^}])+)\}/g, (match, script) => {
+            try {
+                return parser(script)
+            } catch (e) {
+                throw {
+                    type: 'error.commandParsedFail',
+                    commandId: (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs.replace(/\*/g, '\\*') : (<nameToCommandMap>map).name,
+                    message: e.message
+                }
+            }
+        })
+    }
 }
