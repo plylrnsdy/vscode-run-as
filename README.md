@@ -25,7 +25,7 @@ VSCode extension.
 
 After configuration, right Click a file, then select menu item "Run As ...".
 
-![preview](https://github.com/plylrnsdy/vscode-run-as/blob/master/images/run-in-inner-terminal.gif)
+![preview](https://github.com/plylrnsdy/vscode-run-as/raw/master/images/run-in-inner-terminal.gif)
 
 ## Configuration
 
