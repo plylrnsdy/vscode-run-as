@@ -77,44 +77,44 @@
                         {
                             "globs": "*.*",
                             "command": {
-                                "win32": "start ${file}",
-                                "linux": "gnome-open ${file}",
-                                "darwin": "open ${file}"
+                                "win32": "start ${rPath}",
+                                "linux": "gnome-open ${rPath}",
+                                "darwin": "open ${rPath}"
                             },
                             "exceptions": [
                                 {
                                     "globs": "*.@(bat|cmd|exe|sh)",
-                                    "command": "${file}",
+                                    "command": "${rPath}",
                                     "exceptions": [
                                         {
                                             "globs": "*.watcher.@(bat|cmd|sh)",
-                                            "command": "@out ${file}"
+                                            "command": "@out ${rPath}"
                                         }
                                     ]
                                 },
                                 {
                                     "globs": "*.js",
-                                    "command": "node ${file}",
+                                    "command": "node ${rPath}",
                                     "exceptions": [
                                         {
                                             "globs": "*.spec.js",
-                                            "command": "mocha ${file}"
+                                            "command": "mocha ${rPath}"
                                         }
                                     ]
                                 },
                                 {
                                     "globs": "**/@(src|test)/**/*.ts",
-                                    "command": "node ${`${root}/out/${dir}/${sFile}.js`}",
+                                    "command": "node ${`out/${dir}/${sFile}.js`}",
                                     "exceptions": [
                                         {
                                             "globs": "*.spec.ts",
-                                            "command": "mocha ${`${root}/out/${dir}/${sFile}.js`}"
+                                            "command": "mocha ${`out/${dir}/${sFile}.js`}"
                                         }
                                     ]
                                 },
                                 {
                                     "globs": "*.py",
-                                    "command": "python ${file}"
+                                    "command": "python ${rPath}"
                                 }
                             ]
                         }

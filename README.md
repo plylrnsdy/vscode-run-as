@@ -37,24 +37,24 @@ Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
 "RunAs.globsMapToCommand": [{
     "globs": "*.*",
     "command": {
-        "win32": "start ${file}",
-        "linux": "see ${file}",
-        "darwin": "open ${file}"
+        "win32": "start ${rPath}",
+        "linux": "see ${rPath}",
+        "darwin": "open ${rPath}"
     },
     "exceptions": [
         {
             "globs": "*.@(bat|cmd|exe)",
-            "command": "${file}",
+            "command": "${rPath}",
             "exceptions": [
                 {
                     "globs": "*.watcher.@(bat|cmd)",
-                    "command": "@out ${file}"
+                    "command": "@out ${rPath}"
                 }
             ]
         },
         {
             "globs": "**/@(src|test)/**/*.ts",
-            "command": "node ${`${root}/out/${dir}/${sFile}.js`}",
+            "command": "node ${`out/${dir}/${sFile}.js`}",
             "exceptions": [
                 {
                     "globs": "*.spec.ts",
@@ -66,7 +66,7 @@ Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
 }]
 ```
 
-#### 1.1 [globs](https://github.com/isaacs/node-glob)
+#### 1.1 [globs][globs]
 
 A pattern to match file's path name.
 
@@ -76,16 +76,16 @@ The command run in shell after selecting menu item "Run as ...".
 
 **1.2.1 command template(s)**
 
-- a general command, example: `"node ${file}"`
-- or a platform-to-command map, example: `{ "win32": "start ${file}", "linux": "see ${file}", "darwin": "open ${file}" }`.
+- a general command, example: `"node ${rPath}"`
+- or a platform-to-command map, example: `{ "win32": "start ${rPath}", "linux": "see ${rPath}", "darwin": "open ${rPath}" }`.
 
 **1.2.2 command argument: path**
 
 a javascript code snippet, it looks like `${/* javascript */}`. it can be: 
 
-1. a **variable**, example: `${file}`
-2. a **template string**, example: `` ${`${root}/out/${dir}/${sFile}.js`} ``
-    - see: [TABLE-Variable-Meaning](#TABLE-Variable-Meaning)
+1. a **variable**, example: `${rPath}`
+2. a **template string**, example: `` ${`out/${dir}/${sFile}.js`} ``
+    - see: [Table: Variable Meaning](#table-variable-meaning)
 3. a **javascript code snippet**, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
     - PS: you need to use `\\` instead of `\` to _escape_ character in RegExp literal.
 
@@ -97,7 +97,7 @@ if you want to execute a command in new terminal window or not, no matter whethe
 
 A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
 
-#### TABLE-Variable-Meaning
+#### Table: Variable Meaning
 | variable | meaning                                          | example                                   |
 | -------- | ------------------------------------------------ | ----------------------------------------- |
 | `file`    | full path of the file which you right clicked    | `D:\projects\project\src\common\module.ts` |
@@ -141,14 +141,20 @@ Press `F1` in VSCode, type `ext install` and then look for `"Run as ..."` .
 
 ## Issues
 
-Submit the [issues](https://github.com/plylrnsdy/vscode-run-as/issues) if you find any bug or have any suggestion.
+Submit the [issues][issues] if you find any bug or have any suggestion.
 
 ## Contribution
 
-Fork the [repo](https://github.com/plylrnsdy/vscode-run-as) and submit pull requests.
+Fork the [repository][repository] and submit pull requests.
 
 ## About
 
 Author：plylrnsdy
 
-Github：[vscode-run-as](https://github.com/plylrnsdy/vscode-run-as)
+Github：[vscode-run-as][repository]
+
+
+
+[globs]:https://github.com/isaacs/node-glob
+[issues]:https://github.com/plylrnsdy/vscode-run-as/issues
+[repository]:https://github.com/plylrnsdy/vscode-run-as
