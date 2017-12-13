@@ -6,20 +6,21 @@ VSCode extension.
 
 ## What can it do ?
 
-**Right Click a file**, then
-- Run `*.js` in node
-- Run `*.spec.js` in mocha
-- Run `*.ts` corresponding compiled `*.js` in node
-- Run `*.spec.ts` corresponding compiled `*spec.js` in mocha 
-- Run `*.bat`, `*.cmd`, `*.sh` in terminal
-  - to run a **task** by right-clicking a script instead of typing a command
-    - run a **server** in a new terminal windows
-    - run a **watcher** in a new terminal windows
+1. **Right Click a file**, then
+    - Run `*.js` in node
+    - Run `*.spec.js` in mocha
+    - Run `*.ts` corresponding compiled `*.js` in node
+    - Run `*.spec.ts` corresponding compiled `*spec.js` in mocha 
+    - Run `*.bat`, `*.cmd`, `*.sh` in terminal
+    - to run a **task** by right-clicking a script instead of typing a command
+        - run a **server** in a new terminal windows
+        - run a **watcher** in a new terminal windows
+        - and so on
+    - Open `binary file`
+    - in default application
+    - in the application you like
     - and so on
-- Open `binary file`
-  - in default application
-  - in the application you like
-- and so on
+2. Automatic switch working directory when run different file in different folder in workspace.
 
 ## Useage
 

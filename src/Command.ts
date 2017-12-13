@@ -9,21 +9,21 @@ export function cd(cwd: string, wd?: string) {
 }
 
 export function run(filePath: Path): string {
-    let map = mapper.getByFile(filePath.fsPath()),
-        command: string = <string>map.command,
+    // find template command: run file
+    let { globs, command } = mapper.getByFile(filePath.fsPath()),
         isInOuterShell = mapper.newWindow.enable
     // handle prefix: @in, @out
-    command = command.replace(/^@(out|in)\s+/, (match, $switch) => {
+    command = (<string>command).replace(/^@(out|in)\s+/, (match, $switch) => {
         if ($switch === 'out') isInOuterShell = true
         else if ($switch === 'in') isInOuterShell = false
         return ''
     })
     // handle variables: ${`javascript`}
-    command = parseTemplate(map, (script) => {
+    command = parseTemplate({ globs, command }, (script) => {
         let [file, root, rPath, dir, lFile, sFile, ext] = filePath.partitions()
         return Path.unifiedSeparator(Path.wrapWhiteSpace(eval(script)))
     })
-    // handle command
+    // handle template command: run in inner/outer terminal
     if (isInOuterShell)
         return parseTemplate(mapper.newWindow, (script) => { return eval(script) })
     else

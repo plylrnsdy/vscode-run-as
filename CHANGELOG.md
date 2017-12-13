@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.6
+* Fix has not remove prefix from command when run in new terminal window.
+
 ## 1.8.5
 * Less useless code, more efficiency.
 
