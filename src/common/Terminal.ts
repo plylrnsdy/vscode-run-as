@@ -21,7 +21,7 @@ export default class Terminal {
     }
 
     init(): void {
-        this._terminal = createTerminal(this.name)
+        this._terminal = vscode.window.createTerminal(this.name)
     }
 
     /**
@@ -36,5 +36,9 @@ export default class Terminal {
             this._terminal.sendText(command)
         }
         return this
+    }
+
+    equals(obj): boolean {
+        return obj === this._terminal
     }
 }

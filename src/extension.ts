@@ -16,7 +16,10 @@ export function activate(context: vscode.ExtensionContext) {
 
     config.onDidLoad(commandMap.load)
     context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(config.loadNamespace))
-    context.subscriptions.push(vscode.window.onDidCloseTerminal(terminal.init))
+    context.subscriptions.push(vscode.window.onDidCloseTerminal((closedTerminal) => {
+        if (terminal.equals(closedTerminal))
+            terminal.init()
+    }))
     context.subscriptions.push(vscode.commands.registerCommand('extension.runAs', e => {
         if (e.fsPath) {
             try {

@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.7
+* Fix can not use it after Kill Terminal of "Run as ...".
+
 ## 1.8.6
 * Fix has not remove prefix from command when run in new terminal window.
 
