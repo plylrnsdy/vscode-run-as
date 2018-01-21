@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
         config = new Config('RunAs')
 
     config.onDidLoad(commandMap.load)
-    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(config.loadNamespace))
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(() => config.loadNamespace()))
     context.subscriptions.push(vscode.window.onDidCloseTerminal((closedTerminal) => {
         if (terminal.equals(closedTerminal))
             terminal.init()

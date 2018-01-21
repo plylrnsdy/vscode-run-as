@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.8
+* Fix: configurations will not take effect before restarting vscode.
+
 ## 1.8.7
 * Fix can not use it after Kill Terminal of "Run as ...".
 
