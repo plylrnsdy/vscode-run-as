@@ -37,7 +37,7 @@ export function parseTemplate(map: CommandMap, parser: (variable: string) => str
         } catch (e) {
             throw {
                 type: 'error.commandParsedFail',
-                commandId: (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs.replace(/\*/g, '\\*') : (<nameToCommandMap>map).name,
+                commandId: (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs : (<nameToCommandMap>map).name,
                 message: e.message
             }
         }

@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.9
+* Fix: useless escape in notifications in vscode 1.21
+
 ## 1.8.8
 * Fix: configurations will not take effect before restarting vscode.
 
