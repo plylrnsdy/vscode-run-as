@@ -3,7 +3,7 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.8.8",
+    "version": "1.8.12",
     "engines": {
         "vscode": "^1.17.0"
     },
@@ -32,19 +32,15 @@
         "vscode:prepublish": "npm run compile"
     },
     "contributes": {
-        "commands": [
-            {
-                "title": "%command.runAs.title%",
-                "command": "extension.runAs"
-            }
-        ],
+        "commands": [{
+            "title": "%command.runAs.title%",
+            "command": "extension.runAs"
+        }],
         "menus": {
-            "explorer/context": [
-                {
-                    "command": "extension.runAs",
-                    "group": "navigation@4"
-                }
-            ]
+            "explorer/context": [{
+                "command": "extension.runAs",
+                "group": "navigation@44"
+            }]
         },
         "configuration": {
             "type": "object",

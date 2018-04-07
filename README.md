@@ -42,34 +42,29 @@ Open VSCode `setting` (Ctrl+Comma), search for "runas" to change configuration:
         "linux": "see ${rPath}",
         "darwin": "open ${rPath}"
     },
-    "exceptions": [
-        {
-            "globs": "*.@(bat|cmd|exe)",
-            "command": "${rPath}",
-            "exceptions": [
-                {
-                    "globs": "*.watcher.@(bat|cmd)",
-                    "command": "@out ${rPath}"
-                }
-            ]
-        },
-        {
-            "globs": "**/@(src|test)/**/*.ts",
-            "command": "node ${`out/${dir}/${sFile}.js`}",
-            "exceptions": [
-                {
-                    "globs": "*.spec.ts",
-                    "command": "@in mocha ${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}"
-                }
-            ]
-        }
-    ]
+    "exceptions": [{
+        "globs": "*.@(bat|cmd|exe)",
+        "command": "${rPath}",
+        "exceptions": [{
+            "globs": "*.watcher.@(bat|cmd)",
+            "command": "@out ${rPath}"
+        }]
+    }, {
+        "globs": "**/@(src|test)/**/*.ts",
+        "command": "node ${`out/${dir}/${sFile}.js`}",
+        "exceptions": [{
+            "globs": "*.spec.ts",
+            "command": "@in mocha ${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}"
+        }]
+    }]
 }]
 ```
 
 #### 1.1 [globs][globs]
 
 A pattern to match file's path name.
+
+**PS:** you need to use `\\` instead of `\` to _escape_ character in Globs.
 
 #### 1.2 command
 
@@ -88,7 +83,7 @@ a javascript code snippet, it looks like `${/* javascript */}`. it can be:
 2. a **template string**, example: `` ${`out/${dir}/${sFile}.js`} ``
     - see: [Table: Variable Meaning](#table-variable-meaning)
 3. a **javascript code snippet**, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
-    - PS: you need to use `\\` instead of `\` to _escape_ character in RegExp literal.
+    - **PS:** you need to use `\\` instead of `\` to _escape_ character in RegExp literal.
 
 **1.2.3 command prefix: `@in`, `@out`**
 

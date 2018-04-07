@@ -1,9 +1,10 @@
 # Change log
 
-## 1.8.11
+## 1.8.12
 * Fix useless escape in notifications in vscode 1.21;
 * Fix extglob can not escape in globs;
-* Fix did not work in vscode 1.22.
+* Fix did not work in vscode 1.22;
+* Fix "Run As ..." item's position not correct in right click menu.
 
 ## 1.8.8
 * Fix configurations will not take effect before restarting vscode.
