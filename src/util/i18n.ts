@@ -1,6 +1,5 @@
 import * as fs from 'fs'
 import * as util from 'util'
-import { format } from './formatter'
 
 export default class i18n {
 
@@ -19,13 +18,12 @@ export default class i18n {
         }
     }
 
-    get(sections: string, data) {
+    get(sections: string) {
         let _sections = sections.split('.'),
             resource = this.resources
 
         for (let section of _sections)
             resource = resource[section]
-        resource = format(resource, data)
         return resource
     }
 }

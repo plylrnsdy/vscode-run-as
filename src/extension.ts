@@ -1,12 +1,13 @@
 import * as path from 'path'
 import * as vscode from 'vscode'
 import Message from './common/Message'
-import i18nConstructor from "./util/i18n"
+import i18nConstructor from './util/i18n'
 import Config from './common/Config'
 import * as commandMap from './CommandMapper'
 import * as  Command from './Command'
 import Terminal from './common/Terminal'
 import Path from './common/Path'
+import { format } from './util/formatter'
 
 export function activate(context: vscode.ExtensionContext) {
     const message = new Message('Run As'),
@@ -28,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
                 terminal.exec(Command.cd(root, terminal.cwd)).exec(Command.run(fsPath))
                 terminal.cwd = root
             } catch (e) {
-                let msg = i18n.get(e.type, e)
+                let msg = format(i18n.get(e.type), e)
                 msg ? message.error(msg) : console.log(e)
             }
         }

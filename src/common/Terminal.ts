@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 
-const createTerminal = vscode.window.createTerminal
+const { createTerminal } = vscode.window
 
 export default class Terminal {
 
@@ -21,7 +21,7 @@ export default class Terminal {
     }
 
     init(): void {
-        this._terminal = vscode.window.createTerminal(this.name)
+        this._terminal = createTerminal(this.name)
     }
 
     /**

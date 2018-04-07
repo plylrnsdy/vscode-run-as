@@ -1,7 +1,8 @@
 import * as PATH from 'path'
 import * as vscode from 'vscode'
 
-const { getWorkspaceFolder, asRelativePath } = vscode.workspace
+const { file } = vscode.Uri,
+    { getWorkspaceFolder, asRelativePath } = vscode.workspace
 
 export default class Path {
 
@@ -30,7 +31,7 @@ export default class Path {
      */
     root(): string {
         if (!this._root)
-            this._root = getWorkspaceFolder(vscode.Uri.file(this._fsPath)).uri.fsPath
+            this._root = getWorkspaceFolder(file(this._fsPath)).uri.fsPath
         return this._root
     }
     /**
@@ -58,9 +59,6 @@ export default class Path {
     /**
      * Wrap the file or directory name in path with double quote, if the name include whitespace.
      * @static
-     * @param {string} path 
-     * @returns {string} 
-     * @memberof Path
      */
     static wrapWhiteSpace(path: string): string {
         return path.replace(/(^|[\/\\])([^\/\\]+)(?=[\/\\]|$)/g, (match, $0, $1) => {
@@ -73,9 +71,6 @@ export default class Path {
     /**
      * Unified separator in path as '\' in win32 or '/' in posix.
      * @static
-     * @param {string} path 
-     * @returns {string} 
-     * @memberof Path
      */
     static unifiedSeparator(path: string): string {
         return path.replace(/[\/\\]/g, PATH.sep)

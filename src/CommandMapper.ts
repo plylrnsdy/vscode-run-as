@@ -1,4 +1,4 @@
-import * as minimatch from 'minimatch'
+import * as micromatch from 'micromatch'
 
 
 export type nameToCommandMap = {
@@ -14,7 +14,7 @@ export type globsToCommandMap = {
 export type CommandMap = nameToCommandMap | globsToCommandMap
 
 
-const MINIMATCH_OPTION = { matchBase: true, dot: true },
+const MATCH_OPTION = { matchBase: true, dot: true },
     platform = process.platform
 
 export let changeCwd: nameToCommandMap
@@ -22,11 +22,11 @@ export let newWindow: nameToCommandMap
 export let maps: globsToCommandMap[]
 
 export function load(configs) {
-    changeCwd = configs.get('changeCwd')
+    changeCwd = Object.assign({}, configs.get('changeCwd'))
     changeCwd.command = getCommand(changeCwd)
-    newWindow = configs.get('runInNewTerminalWindows')
+    newWindow = Object.assign({}, configs.get('runInNewTerminalWindows'))
     newWindow.command = getCommand(newWindow)
-    maps = configs.get('globsMapToCommand')
+    maps = JSON.parse(JSON.stringify(configs.get('globsMapToCommand')))
 }
 
 export function getByFile(file: string): globsToCommandMap {
@@ -41,7 +41,7 @@ function searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap 
         match2: globsToCommandMap
 
     for (let type of types)
-        if (minimatch(file, type.globs, MINIMATCH_OPTION)) {
+        if (micromatch.isMatch(file, type.globs, MATCH_OPTION)) {
             match = type
             match2 = type.exceptions ? searchMap(file, type.exceptions) : null
             return match2 || match
@@ -59,7 +59,7 @@ export function getCommand(map: CommandMap): string {
         else
             throw {
                 type: 'error.noCommandInThisPlatform',
-                commandId: (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs.replace(/\*/g, '\\*') : (<nameToCommandMap>map).name,
+                commandId: (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs : (<nameToCommandMap>map).name,
                 message: 'No command in this platform.'
             }
 }

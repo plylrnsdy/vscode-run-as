@@ -1,10 +1,12 @@
 # Change log
 
-## 1.8.9
-* Fix: useless escape in notifications in vscode 1.21
+## 1.8.11
+* Fix useless escape in notifications in vscode 1.21;
+* Fix extglob can not escape in globs;
+* Fix did not work in vscode 1.22.
 
 ## 1.8.8
-* Fix: configurations will not take effect before restarting vscode.
+* Fix configurations will not take effect before restarting vscode.
 
 ## 1.8.7
 * Fix can not use it after Kill Terminal of "Run as ...".

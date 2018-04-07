@@ -73,52 +73,39 @@
                 "RunAs.globsMapToCommand": {
                     "type": "array",
                     "description": "%RunAs.globsMapToCommand.description%",
-                    "default": [
-                        {
-                            "globs": "*.*",
-                            "command": {
-                                "win32": "start ${rPath}",
-                                "linux": "gnome-open ${rPath}",
-                                "darwin": "open ${rPath}"
-                            },
-                            "exceptions": [
-                                {
-                                    "globs": "*.@(bat|cmd|exe|sh)",
-                                    "command": "${rPath}",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.watcher.@(bat|cmd|sh)",
-                                            "command": "@out ${rPath}"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "globs": "*.js",
-                                    "command": "node ${rPath}",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.spec.js",
-                                            "command": "mocha ${rPath}"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "globs": "**/@(src|test)/**/*.ts",
-                                    "command": "node ${`out/${dir}/${sFile}.js`}",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.spec.ts",
-                                            "command": "mocha ${`out/${dir}/${sFile}.js`}"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "globs": "*.py",
-                                    "command": "python ${rPath}"
-                                }
-                            ]
-                        }
-                    ]
+                    "default": [{
+                        "globs": "*.*",
+                        "command": {
+                            "win32": "start ${rPath}",
+                            "linux": "gnome-open ${rPath}",
+                            "darwin": "open ${rPath}"
+                        },
+                        "exceptions": [{
+                            "globs": "*.@(bat|cmd|exe|sh)",
+                            "command": "${rPath}",
+                            "exceptions": [{
+                                "globs": "*.watcher.@(bat|cmd|sh)",
+                                "command": "@out ${rPath}"
+                            }]
+                        }, {
+                            "globs": "*.js",
+                            "command": "node ${rPath}",
+                            "exceptions": [{
+                                "globs": "*.spec.js",
+                                "command": "mocha ${rPath}"
+                            }]
+                        }, {
+                            "globs": "**/@(src|test)/**/*.ts",
+                            "command": "node ${`out/${dir}/${sFile}.js`}",
+                            "exceptions": [{
+                                "globs": "*.spec.ts",
+                                "command": "mocha ${`out/${dir}/${sFile}.js`}"
+                            }]
+                        }, {
+                            "globs": "*.py",
+                            "command": "python ${rPath}"
+                        }]
+                    }]
                 }
             }
         }
@@ -129,9 +116,10 @@
         "publisherDisplayName": "plylrnsdy"
     },
     "dependencies": {
-        "minimatch": "^3.0.4"
+        "micromatch": "^3.1.10"
     },
     "devDependencies": {
+        "@types/micromatch": "^3.1.0",
         "@types/mocha": "^2.2.43",
         "@types/node": "^7.0.43",
         "del": "^3.0.0",
