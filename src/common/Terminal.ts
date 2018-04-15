@@ -1,15 +1,15 @@
-import * as vscode from 'vscode'
+import * as vscode from 'vscode';
 
-const { createTerminal } = vscode.window
+const { createTerminal } = vscode.window;
 
 export default class Terminal {
 
-    private _terminal: vscode.Terminal
+    private _terminal: vscode.Terminal;
     /**
      * VSCode inner Terminal current working directory
      * @memberof Terminal
      */
-    cwd: string
+    cwd: string;
 
     /**
      * Construct a VSCode inner Terminal named ${name}.
@@ -17,11 +17,11 @@ export default class Terminal {
      * @memberof Terminal
      */
     constructor(private name: string) {
-        this.init()
+        this.init();
     }
 
     init(): void {
-        this._terminal = createTerminal(this.name)
+        this._terminal = createTerminal(this.name);
     }
 
     /**
@@ -32,13 +32,13 @@ export default class Terminal {
      */
     exec(command: string): Terminal {
         if (command) {
-            this._terminal.show(false)
-            this._terminal.sendText(command)
+            this._terminal.show(false);
+            this._terminal.sendText(command);
         }
-        return this
+        return this;
     }
 
     equals(obj): boolean {
-        return obj === this._terminal
+        return obj === this._terminal;
     }
 }

@@ -1,10 +1,15 @@
 # Change log
 
+## 1.8.14
+* Refactor the extension;
+* Fix can not run in Command Palette when open a document;
++ Add README for Simplified Chinese.
+
 ## 1.8.12
 * Fix useless escape in notifications in vscode 1.21;
 * Fix extglob can not escape in globs;
 * Fix did not work in vscode 1.22;
-* Fix "Run As ..." item's position not correct in right click menu.
+* Fix "Run As ..." item's position not correct on right click menu.
 
 ## 1.8.8
 * Fix configurations will not take effect before restarting vscode.

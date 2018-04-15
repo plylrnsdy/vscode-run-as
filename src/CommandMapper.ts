@@ -1,65 +1,92 @@
-import * as micromatch from 'micromatch'
+import * as micromatch from 'micromatch';
+import { commands } from 'vscode';
 
 
-export type nameToCommandMap = {
+interface Config {
+    get(sections: string): any
+}
+
+type nameToCommandMap = {
     name: string,
     enable?: boolean,
     command: string | { [platform: string]: string }
-}
-export type globsToCommandMap = {
+};
+type globsToCommandMap = {
     globs: string,
     command: string | { [platform: string]: string },
     exceptions?: globsToCommandMap[]
-}
-export type CommandMap = nameToCommandMap | globsToCommandMap
+};
+type CommandMap = nameToCommandMap | globsToCommandMap;
+export type idToCommandMap = {
+    id: string,
+    enable?: boolean,
+    command: string,
+    exceptions?: idToCommandMap[]
+};
 
 
 const MATCH_OPTION = { matchBase: true, dot: true },
-    platform = process.platform
+    platform = process.platform;
 
-export let changeCwd: nameToCommandMap
-export let newWindow: nameToCommandMap
-export let maps: globsToCommandMap[]
+export class CommandMapper {
 
-export function load(configs) {
-    changeCwd = Object.assign({}, configs.get('changeCwd'))
-    changeCwd.command = getCommand(changeCwd)
-    newWindow = Object.assign({}, configs.get('runInNewTerminalWindows'))
-    newWindow.command = getCommand(newWindow)
-    maps = JSON.parse(JSON.stringify(configs.get('globsMapToCommand')))
-}
+    changeCwd: idToCommandMap;
+    newWindow: idToCommandMap;
+    private maps: idToCommandMap[];
 
-export function getByFile(file: string): globsToCommandMap {
-    let map = searchMap(file, maps)
-
-    map.command = getCommand(map)
-    return map
-}
-
-function searchMap(file: string, types: globsToCommandMap[]): globsToCommandMap {
-    let match: globsToCommandMap,
-        match2: globsToCommandMap
-
-    for (let type of types)
-        if (micromatch.isMatch(file, type.globs, MATCH_OPTION)) {
-            match = type
-            match2 = type.exceptions ? searchMap(file, type.exceptions) : null
-            return match2 || match
+    handleConfigLoad() {
+        return (configs: Config) => {
+            this.changeCwd = this.formatMap(configs.get('changeCwd'));
+            this.newWindow = this.formatMap(configs.get('runInNewTerminalWindows'));
+            this.maps = this.formatMaps(configs.get('globsMapToCommand'));
         }
-}
+    }
 
-export function getCommand(map: CommandMap): string {
-    let command = map.command
+    private formatMap(map: CommandMap): idToCommandMap {
+        map['id'] = 'name' in map ? map.name : map.globs;
+        map.command = typeof map.command === 'string'
+            ? map.command
+            : map.command[platform];
 
-    if (typeof command === 'string')
-        return command
-    else
-        if (command[platform])
-            return command[platform]
-        else
+        return map as any as idToCommandMap;
+    }
+
+    private formatMaps(maps: CommandMap[]): idToCommandMap[] {
+        for (let map of maps) {
+            this.formatMap(map);
+            if ('exceptions' in map) this.formatMaps(map.exceptions);
+        }
+        return maps as any as idToCommandMap[];
+    }
+
+    getMap(path: string): idToCommandMap {
+        let map = this.searchMap(path, this.maps);
+
+        if (!map)
+            throw {
+                type: 'error.noConfiguration',
+                path: path,
+                message: 'No configuration for this type of path.'
+            }
+        if (!map.command)
             throw {
                 type: 'error.noCommandInThisPlatform',
-                commandId: (<globsToCommandMap>map).globs ? (<globsToCommandMap>map).globs : (<nameToCommandMap>map).name,
+                commandId: map.id,
                 message: 'No command in this platform.'
             }
+
+        return map;
+    }
+
+    private searchMap(path: string, types: idToCommandMap[]): idToCommandMap {
+        let match: idToCommandMap,
+            match2: idToCommandMap;
+
+        for (let type of types)
+            if (micromatch.isMatch(path, type.id, MATCH_OPTION)) {
+                match = type;
+                match2 = type.exceptions ? this.searchMap(path, type.exceptions) : null;
+                return match2 || match;
+            }
+    }
 }

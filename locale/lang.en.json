@@ -1,5 +1,7 @@
 {
     "error": {
+        "noFile": "No file to run.",
+        "noConfiguration": "No configuration for this type of path: \"${path}\"",
         "noCommandInThisPlatform": "`${commandId}` has no command to execute in your platform.",
         "commandParsedFail": "`${commandId}` corresponding command is wrong: ${message}"
     }

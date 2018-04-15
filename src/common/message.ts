@@ -1,10 +1,10 @@
-import * as vscode from 'vscode'
+import * as vscode from 'vscode';
 
-const { showInformationMessage, showWarningMessage, showErrorMessage } = vscode.window
+const { showInformationMessage, showWarningMessage, showErrorMessage } = vscode.window;
 
 export default class Message {
 
-    private prefix: string
+    private prefix: string;
 
     /**
      * Creates an instance of Message.
@@ -12,18 +12,18 @@ export default class Message {
      * @memberof Message
      */
     constructor(extensionName: string) {
-        this.prefix = `[${extensionName}] `
+        this.prefix = `[${extensionName}] `;
     }
 
     info(message: string) {
-        showInformationMessage(this.prefix + message)
+        showInformationMessage(this.prefix + message);
     }
 
     warn(message: string) {
-        showWarningMessage(this.prefix + message)
+        showWarningMessage(this.prefix + message);
     }
 
     error(message: string) {
-        showErrorMessage(this.prefix + message)
+        showErrorMessage(this.prefix + message);
     }
 }

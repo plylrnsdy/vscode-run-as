@@ -1,43 +1,42 @@
-import * as vscode from 'vscode'
+import * as vscode from 'vscode';
 
-const getConfiguration = vscode.workspace.getConfiguration
+const getConfiguration = vscode.workspace.getConfiguration;
 
 export default class Config {
 
-    protected configs: object
-    protected loadedListeners: Array<(config: any) => void> = []
+    protected configs: any
+    protected loadedListeners: Array<(config: Config) => void> = []
 
     /**
      * Construct a Configuration with VSCode extension namespace.
      * @param extNamespace 
      */
     constructor(private extNamespace: string) {
-        this.loadNamespace()
+        this.loadNamespace();
     }
 
     loadNamespace(): void {
         // load configuration with top namespace
-        this.configs = getConfiguration(this.extNamespace)
+        this.configs = JSON.parse(JSON.stringify(getConfiguration(this.extNamespace)));
         // emit event 'load'
         for (let callback of this.loadedListeners)
-            callback(this.configs)
+            callback(this);
     }
 
     onDidLoad(callback: (config: Config) => void): void {
-        this.loadedListeners.push(callback)
-        callback(this)
+        this.loadedListeners.push(callback);
+        callback(this);
     }
 
     get(sections: string): any {
         // Error: vscode.workspace.getConfiguration('runas.globsMapToCommand') -> {}
         // Correct: vscode.workspace.getConfiguration('runas').run.globsMapToCommand -> globsToCommandMap[]
-        let _sections: string[] = sections.split('.'),
-            _length = _sections.length,
-            _configs = this.configs
+        let _configs = this.configs,
+            _sections: string[] = sections.split('.');
 
-        for (let i = 0; i < _length; i++)
-            _configs = _configs[_sections[i]]
+        for (let i = 0; i < _sections.length; i++)
+            _configs = _configs[_sections[i]];
 
-        return _configs
+        return _configs;
     }
 }

@@ -1,29 +1,29 @@
-import * as fs from 'fs'
-import * as util from 'util'
+import * as fs from 'fs';
+import * as util from 'util';
 
 export default class i18n {
 
-    private resources
+    private resources;
 
     constructor(private defaultLang: string, lang: string, localePath: string) {
-        lang = lang.toLowerCase()
-        let langs = [lang, lang.split('-')[0], defaultLang]
+        lang = lang.toLowerCase();
+        let langs = [lang, lang.split('-')[0], defaultLang];
 
         for (let language of langs) {
-            let langResourcePath = util.format(localePath, language)
+            let langResourcePath = util.format(localePath, language);
             if (fs.existsSync(langResourcePath)) {
-                this.resources = JSON.parse(fs.readFileSync(langResourcePath, 'utf8'))
-                break
+                this.resources = JSON.parse(fs.readFileSync(langResourcePath, 'utf8'));
+                break;
             }
         }
     }
 
-    get(sections: string) {
+    message(sections: string) {
         let _sections = sections.split('.'),
-            resource = this.resources
+            resource = this.resources;
 
         for (let section of _sections)
-            resource = resource[section]
-        return resource
+            resource = resource[section];
+        return resource;
     }
 }

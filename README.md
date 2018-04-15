@@ -2,31 +2,34 @@
 
 [![Marketplace](https://vsmarketplacebadge.apphb.com/version/plylrnsdy.run-as.svg)](https://marketplace.visualstudio.com/items/plylrnsdy.run-as) [![Installs](https://vsmarketplacebadge.apphb.com/installs/plylrnsdy.run-as.svg)](https://marketplace.visualstudio.com/items/plylrnsdy.run-as) [![Ratings](https://vsmarketplacebadge.apphb.com/rating-short/plylrnsdy.run-as.svg)](https://marketplace.visualstudio.com/items/plylrnsdy.run-as)
 
-VSCode extension.
+Configure, then right click a file to run/open it.
 
-## What can it do ?
-
-1. **Right Click a file**, then
-    - Run `*.js` in node
-    - Run `*.spec.js` in mocha
-    - Run `*.ts` corresponding compiled `*.js` in node
-    - Run `*.spec.ts` corresponding compiled `*spec.js` in mocha 
-    - Run `*.bat`, `*.cmd`, `*.sh` in terminal
-    - to run a **task** by right-clicking a script instead of typing a command
-        - run a **server** in a new terminal windows
-        - run a **watcher** in a new terminal windows
-        - and so on
-    - Open `binary file`
-    - in default application
-    - in the application you like
-    - and so on
-2. Automatic switch working directory when run different file in different folder in workspace.
+### README in Other Languages
+<center><a href="./docs/README.zh-cn.md">简体中文</a></center>
 
 ## Useage
 
 After configuration, right Click a file, then select menu item "Run As ...".
 
 ![preview](https://github.com/plylrnsdy/vscode-run-as/raw/master/images/run-in-inner-terminal.gif)
+
+## Features
+
+1. **Right Click a file**, then
+    - Run `*.js` in node
+    - Run `*.spec.js` in mocha
+    - Run `*.ts` corresponding compiled `*.js` in node
+    - Run `*.spec.ts` corresponding compiled `*.spec.js` in mocha 
+    - Run `*.bat`, `*.cmd`, `*.sh` in terminal
+    - to run a **task** by right-clicking a script instead of typing a command
+        - run a **server** in a new terminal windows
+        - run a **watcher** in a new terminal windows
+        - and so on
+    - Open `binary file`
+        - in default application
+        - in the application you like
+    - and so on
+2. Automatic switch working directory when run different file in different folder in workspace.
 
 ## Configuration
 
@@ -87,7 +90,7 @@ a javascript code snippet, it looks like `${/* javascript */}`. it can be:
 
 **1.2.3 command prefix: `@in`, `@out`**
 
-if you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
+If you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
 
 #### 1.3 exceptions
 
@@ -125,7 +128,7 @@ In `"RunAs.runInNewTerminalWindows.commands"`,
 - the value is the command to execute command in a new terminal windows in this platform, e.g. `"start ${command}"`.
     - `${command}` will be replaced by the command in globs-to-command mapping.
 
-You can enable it by change `"RunAs.runInNewTerminalWindows.enable"` to `true`.
+You can run the command in a new terminal windows in default by change `"RunAs.runInNewTerminalWindows.enable"` to `true`, or you can use the prefix `@out` in the command to use it alone.
 
 ## Install
 
