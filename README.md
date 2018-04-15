@@ -5,7 +5,7 @@
 Configure, then right click a file to run/open it.
 
 ### README in Other Languages
-<center><a href="./docs/README.zh-cn.md">简体中文</a></center>
+<center><a href="https://github.com/plylrnsdy/vscode-run-as/raw/master/docs/README.zh-cn.md">简体中文</a></center>
 
 ## Useage
 

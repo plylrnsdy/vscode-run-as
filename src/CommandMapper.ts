@@ -43,7 +43,7 @@ export class CommandMapper {
     }
 
     private formatMap(map: CommandMap): idToCommandMap {
-        map['id'] = 'name' in map ? map.name : map.globs;
+        map['id'] = 'name' in map ? (map as nameToCommandMap).name : (map as globsToCommandMap).globs;
         map.command = typeof map.command === 'string'
             ? map.command
             : map.command[platform];
@@ -54,7 +54,7 @@ export class CommandMapper {
     private formatMaps(maps: CommandMap[]): idToCommandMap[] {
         for (let map of maps) {
             this.formatMap(map);
-            if ('exceptions' in map) this.formatMaps(map.exceptions);
+            if ('exceptions' in map) this.formatMaps((map as globsToCommandMap).exceptions);
         }
         return maps as any as idToCommandMap[];
     }
