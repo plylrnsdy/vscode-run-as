@@ -1,5 +1,8 @@
 # Change log
 
+# 1.8.17
+- Remove gulp.
+
 # 1.8.16
 * Fix the link of the README for Simplified Chinese.
 * Update `devDependencies`.
