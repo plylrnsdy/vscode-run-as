@@ -1,5 +1,9 @@
 # Change log
 
+# 1.8.16
+* Fix the link of the README for Simplified Chinese.
+* Update `devDependencies`.
+
 ## 1.8.14
 * Refactor the extension;
 * Fix can not run in Command Palette when open a document;

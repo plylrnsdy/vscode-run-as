@@ -3,7 +3,7 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.8.14",
+    "version": "1.8.16",
     "engines": {
         "vscode": "^1.17.0"
     },
@@ -34,7 +34,8 @@
     "contributes": {
         "commands": [{
             "title": "%command.runAs.title%",
-            "command": "extension.runAs"
+            "command": "extension.runAs",
+            "category": "RunAs"
         }],
         "menus": {
             "explorer/context": [{
@@ -121,14 +122,14 @@
         "@types/node": "^7.0.43",
         "chai": "^4.1.2",
         "del": "^3.0.0",
-        "gulp": "^3.9.1",
+        "gulp": "^4.0.0",
         "gulp-changed": "^3.1.1",
-        "gulp-copy": "^1.0.1",
-        "gulp-shell": "^0.6.3",
+        "gulp-copy": "^4.0.0",
+        "gulp-shell": "^0.6.5",
         "gulp-typescript": "^3.2.3",
-        "mocha": "^3.5.0",
+        "mocha": "^5.2.0",
         "typescript": "^2.5.2",
-        "vscode": "^1.1.5"
+        "vscode": "^1.1.21"
     },
     "license": "MIT"
 }
