@@ -1,5 +1,6 @@
 import Path from './common/Path';
 import { idToCommandMap, CommandMapper } from './CommandMapper';
+import { format } from './util/formatter';
 
 
 export default class Command {
@@ -8,7 +9,7 @@ export default class Command {
 
     cd(cwd: string, wd?: string) {
         if (wd !== cwd)
-            return this.parseTemplate(this.mapper.changeCwd, (script) => eval(script));
+            return format(this.mapper.changeCwd.command, { cwd });
     }
 
     run(filePath: Path): string {
@@ -28,7 +29,7 @@ export default class Command {
         })
         // handle template command: run in inner/outer terminal
         return isInOuterShell
-            ? this.parseTemplate(this.mapper.newWindow, (script) => eval(script))
+            ? format(this.mapper.newWindow.command, { command })
             : command;
     }
 

@@ -39,9 +39,9 @@ export default class Runner {
                             ? editor.document.fileName
                             : undefined;
 
-                if (path) this.run(path)
-                else throw { type: 'error.noFile', message: 'No file to run.' };
+                if (!path) throw { type: 'error.noFile', message: 'No file to run.' };
 
+                this.run(path);
             } catch (e) {
                 let msg = format(this.i18n.message(e.type), e);
                 msg ? this.message.error(msg) : console.log(e);

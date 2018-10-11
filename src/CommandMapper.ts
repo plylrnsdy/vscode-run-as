@@ -1,5 +1,4 @@
 import * as micromatch from 'micromatch';
-import { commands } from 'vscode';
 
 
 interface Config {
@@ -62,18 +61,16 @@ export class CommandMapper {
     getMap(path: string): idToCommandMap {
         let map = this.searchMap(path, this.maps);
 
-        if (!map)
-            throw {
-                type: 'error.noConfiguration',
-                path: path,
-                message: 'No configuration for this type of path.'
-            }
-        if (!map.command)
-            throw {
-                type: 'error.noCommandInThisPlatform',
-                commandId: map.id,
-                message: 'No command in this platform.'
-            }
+        if (!map) throw {
+            type: 'error.noConfiguration',
+            path: path,
+            message: 'No configuration for this type of path.'
+        }
+        if (!map.command) throw {
+            type: 'error.noCommandInThisPlatform',
+            commandId: map.id,
+            message: 'No command in this platform.'
+        }
 
         return map;
     }

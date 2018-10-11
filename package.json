@@ -3,26 +3,19 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.8.16",
+    "version": "1.8.18",
     "engines": {
         "vscode": "^1.17.0"
     },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/plylrnsdy/vscode-run-as"
-    },
-    "icon": "images/icon.png",
+    "categories": [
+        "Other"
+    ],
     "keywords": [
         "execute",
         "run",
         "click"
     ],
-    "categories": [
-        "Other"
-    ],
-    "activationEvents": [
-        "onCommand:extension.runAs"
-    ],
+    "icon": "images/icon.png",
     "main": "out/src/extension.js",
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",
@@ -31,6 +24,32 @@
         "test": "npm run compile && node ./node_modules/vscode/bin/test",
         "publish": "npm run compile && vsce publish"
     },
+    "dependencies": {
+        "micromatch": "^3.1.10"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.1.2",
+        "@types/micromatch": "^3.1.0",
+        "@types/mocha": "^2.2.43",
+        "@types/node": "^7.0.43",
+        "chai": "^4.1.2",
+        "mocha": "^5.2.0",
+        "typescript": "^2.5.2",
+        "vscode": "^1.1.21"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/plylrnsdy/vscode-run-as#README.md",
+    "bugs": {
+        "url": "https://github.com/plylrnsdy/vscode-run-as/issues",
+        "email": "plylrnsdy@163.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/plylrnsdy/vscode-run-as.git"
+    },
+    "activationEvents": [
+        "onCommand:extension.runAs"
+    ],
     "contributes": {
         "commands": [{
             "title": "%command.runAs.title%",
@@ -45,7 +64,7 @@
         },
         "configuration": {
             "type": "object",
-            "title": "\"Run As ...\" Configuration",
+            "title": "Run As ...",
             "properties": {
                 "RunAs.changeCwd": {
                     "type": "object",
@@ -106,24 +125,5 @@
                 }
             }
         }
-    },
-    "__metadata": {
-        "id": "6461046e-a9c8-44e6-abab-c48276a68a09",
-        "publisherId": "7fdf942b-6fd2-438f-ad84-daa8718efb8c",
-        "publisherDisplayName": "plylrnsdy"
-    },
-    "dependencies": {
-        "micromatch": "^3.1.10"
-    },
-    "devDependencies": {
-        "@types/chai": "^4.1.2",
-        "@types/micromatch": "^3.1.0",
-        "@types/mocha": "^2.2.43",
-        "@types/node": "^7.0.43",
-        "chai": "^4.1.2",
-        "mocha": "^5.2.0",
-        "typescript": "^2.5.2",
-        "vscode": "^1.1.21"
-    },
-    "license": "MIT"
+    }
 }

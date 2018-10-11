@@ -1,9 +1,12 @@
 # Change log
 
-# 1.8.17
+## 1.8.18
+* Fix can not run the file which has whitespace in the first directory of path, like `some words/file.ext`.
+
+## 1.8.17
 - Remove gulp.
 
-# 1.8.16
+## 1.8.16
 * Fix the link of the README for Simplified Chinese.
 * Update `devDependencies`.
 
