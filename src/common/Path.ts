@@ -30,8 +30,12 @@ export default class Path {
      * @memberof Path
      */
     root(): string {
-        if (!this._root)
+        if (!this._root) {
             this._root = getWorkspaceFolder(file(this._fsPath)).uri.fsPath;
+            if (process.platform === 'win32') {
+                this._root = this._root.replace(/\\/g, '\\\\');
+            }
+        }
         return this._root;
     }
     /**
@@ -40,8 +44,12 @@ export default class Path {
      * @memberof Path
      */
     asRelative(): string {
-        if (!this._relative)
+        if (!this._relative) {
             this._relative = asRelativePath(this._fsPath, false);
+            if (process.platform === 'win32') {
+                this._relative = this._relative.replace(/\\/g, '\\\\');
+            }
+        }
         return this._relative;
     }
     /**
@@ -51,7 +59,7 @@ export default class Path {
      */
     partitions(): string[] {
         if (!this._partitions) {
-            let rPathPartitions = this.asRelative().match(/(.*?)[\/\\]?(([^\/\\]+?)\.(\w+))$/);
+            let rPathPartitions = this.asRelative().match(/(.*?)[\/\\]{0,2}(([^\/\\]+?)\.(\w+))$/);
             this._partitions = [this.fsPath(), this.root(), ...rPathPartitions];
         }
         return this._partitions;
@@ -61,7 +69,7 @@ export default class Path {
      * @static
      */
     static wrapWhiteSpace(path: string): string {
-        return `"${path}"`;
+        return path.indexOf(' ') > -1 ? `"${path}"` : path;
     }
     /**
      * Unified separator in path as '\' in win32 or '/' in posix.

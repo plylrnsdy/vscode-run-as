@@ -1,4 +1,5 @@
 import * as micromatch from 'micromatch';
+import { TerminalOption } from './common/Terminal';
 
 
 interface Config {
@@ -12,6 +13,7 @@ type nameToCommandMap = {
 };
 type globsToCommandMap = {
     globs: string,
+    terminal?: string,
     command: string | { [platform: string]: string },
     exceptions?: globsToCommandMap[]
 };
@@ -19,6 +21,7 @@ type CommandMap = nameToCommandMap | globsToCommandMap;
 export type idToCommandMap = {
     id: string,
     enable?: boolean,
+    terminal?: string | { exec: (cmd: string, options: TerminalOption) => void },
     command: string,
     exceptions?: idToCommandMap[]
 };

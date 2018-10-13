@@ -5,9 +5,9 @@
 Configure, then right click a file to run/open it.
 
 ### README in Other Languages
-<center><a href="https://github.com/plylrnsdy/vscode-run-as/blob/master/docs/README.zh-cn.md">简体中文</a></center>
+<a href="https://github.com/plylrnsdy/vscode-run-as/blob/master/docs/README.zh-cn.md">简体中文</a>
 
-## Useage
+## Usage
 
 After configuration, right Click a file, then select menu item "Run As ...".
 
@@ -21,15 +21,15 @@ After configuration, right Click a file, then select menu item "Run As ...".
     - Run `*.ts` corresponding compiled `*.js` in node
     - Run `*.spec.ts` corresponding compiled `*.spec.js` in mocha 
     - Run `*.bat`, `*.cmd`, `*.sh` in terminal
-    - to run a **task** by right-clicking a script instead of typing a command
+    - To run a **task** by right-clicking a script instead of typing a command
         - run a **server** in a new terminal windows
         - run a **watcher** in a new terminal windows
         - and so on
     - Open `binary file`
         - in default application
         - in the application you like
-    - and so on
-2. Automatic switch working directory when run different file in different folder in workspace.
+    - And so on
+2. Automatic switch working directory when run different file in a different folder in the workspace.
 
 ## Configuration
 
@@ -71,33 +71,33 @@ A pattern to match file's path name.
 
 #### 1.2 command
 
-The command run in shell after selecting menu item "Run as ...".
+The command runs in shell after selecting the menu item "Run as ...".
 
 **1.2.1 command template(s)**
 
-- a general command, example: `"node ${rPath}"`
-- or a platform-to-command map, example: `{ "win32": "start ${rPath}", "linux": "see ${rPath}", "darwin": "open ${rPath}" }`.
+- A general command, example: `"node ${rPath}"`
+- Or a platform-to-command map, example: `{ "win32": "start ${rPath}", "linux": "see ${rPath}", "darwin": "open ${rPath}" }`.
 
 **1.2.2 command argument: path**
 
-a javascript code snippet, it looks like `${/* javascript */}`. it can be: 
+A javascript code snippet, it looks like `${/* javascript */}`. It can be: 
 
-1. a **variable**, example: `${rPath}`
-2. a **template string**, example: `` ${`out/${dir}/${sFile}.js`} ``
-    - see: [Table: Variable Meaning](#table-variable-meaning)
-3. a **javascript code snippet**, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
+1. A **variable**, example: `${rPath}`
+2. A **template string**, example: `` ${`out/${dir}/${sFile}.js`} ``
+    - See: [Table: Variable Meaning](#table-variable-meaning)
+3. A **javascript code snippet**, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
     - **PS:** you need to use `\\` instead of `\` to _escape_ character in RegExp literal.
 
 **1.2.3 command prefix: `@in`, `@out`**
 
-If you want to execute a command in new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
+If you want to execute a command in a new terminal window or not, no matter whether `"RunAs.runInNewTerminalWindows.enable"` is true or false. You can add a prefix `@out ` or `@in ` in command.
 
 #### 1.3 exceptions
 
-A array of globs-to-command mapping, files matched one of them will execute itself command instead of it's parent's command.
+A array of globs-to-command mapping, files matched one of them will execute itself command instead of its parent's command.
 
 #### Table: Variable Meaning
-| variable | meaning                                          | example                                   |
+| Variable | Meaning                                          | Example                                   |
 | -------- | ------------------------------------------------ | ----------------------------------------- |
 | `file`    | full path of the file which you right clicked    | `D:\projects\project\src\common\module.ts` |
 | `root`    | the folder opened in vscode                      | `D:\projects\project`                      |
@@ -121,14 +121,14 @@ A array of globs-to-command mapping, files matched one of them will execute itse
 ```
 
 In `"RunAs.runInNewTerminalWindows.commands"`,
-- the key is platform string in VSCode:
+- The key is platform string in VSCode:
     - Windows: `"win32"`,
     - Linux: `"linux"`
     - Mac OS: `"darwin"`
-- the value is the command to execute command in a new terminal windows in this platform, e.g. `"start ${command}"`.
+- The value is the command to execute a command in a new terminal windows in this platform, e.g. `"start ${command}"`.
     - `${command}` will be replaced by the command in globs-to-command mapping.
 
-You can run the command in a new terminal windows in default by change `"RunAs.runInNewTerminalWindows.enable"` to `true`, or you can use the prefix `@out` in the command to use it alone.
+You can run the command in a new terminal windows in default by changing `"RunAs.runInNewTerminalWindows.enable"` to `true`, or you can use the prefix `@out` in the command to use it alone.
 
 ## Install
 
