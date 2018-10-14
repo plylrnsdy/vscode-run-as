@@ -7,7 +7,7 @@
         {
             "type": "extensionHost",
             "request": "launch",
-            "name": "启动扩展",
+            "name": "调试扩展",
             "runtimeExecutable": "${execPath}",
             "args": [
                 "--extensionDevelopmentPath=${workspaceFolder}"
@@ -15,7 +15,7 @@
             "outFiles": [
                 "${workspaceFolder}/out/**/*.js"
             ],
-            "preLaunchTask": "compile"
+            // "preLaunchTask": "compile"
         },
         {
             "type": "node",

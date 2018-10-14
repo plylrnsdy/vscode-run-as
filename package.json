@@ -3,7 +3,7 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.8.18",
+    "version": "1.8.20",
     "engines": {
         "vscode": "^1.17.0"
     },
@@ -71,7 +71,11 @@
                     "description": "%RunAs.changeCwd.description%",
                     "default": {
                         "name": "Change Current Working Directory",
-                        "command": "cd ${cwd}"
+                        "command": {
+                            "win32": "cd -d ${cwd}",
+                            "linux": "cd ${cwd}",
+                            "darwin": "cd ${cwd}"
+                        }
                     }
                 },
                 "RunAs.runInNewTerminalWindows": {
@@ -88,9 +92,10 @@
                 },
                 "RunAs.globsMapToCommand": {
                     "type": "array",
-                    "description": "%RunAs.globsMapToCommand.description%",
+                    "markdownDescription": "%RunAs.globsMapToCommand.description%",
                     "default": [{
                         "globs": "*.*",
+                        "mode": "silent",
                         "command": {
                             "win32": "start ${rPath}",
                             "linux": "gnome-open ${rPath}",
@@ -101,6 +106,9 @@
                             "command": ".\\${rPath}",
                             "exceptions": [{
                                 "globs": "*.watcher.@(bat|cmd)",
+                                "command": "@block .\\${rPath}"
+                            }, {
+                                "globs": "\\[server\\]*.@(bat|cmd)",
                                 "command": "@out .\\${rPath}"
                             }]
                         }, {
