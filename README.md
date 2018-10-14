@@ -15,7 +15,7 @@
         - Run a **server** in a new terminal windows out of vscode
     - Open `binary file` in default application or the application you like
 2. Automatic switch working directory when run different file in a different folder in the workspace.
-3. [**New!**](#1.3-globs-to-cmd.mode)  More mode to control the behavior of terminal and panel.
+3. [**New!**](#13-globs-to-cmdmode)  More mode to control the behavior of terminal and panel.
 
 ## Usage
 
@@ -101,7 +101,7 @@ A javascript code snippet, it looks like `${/* javascript */}`. It can be:
 3. A **javascript code snippet**, example: `${file.replace(/(\\/(?:src|test)\\/)/, '/out$1').replace(/ts$/, 'js')}`, this code snippet in default configuration means right click to run *.ts but actually execute the *.js in folder `out`.
     - **PS:** you need to use `\\` instead of `\` to _escape_ character in RegExp literal.
 
-**1.2.3 command prefix: `@` + [terminal mode](#1.3-globs-to-cmd.mode)**
+**1.2.3 command prefix: `@` + [terminal mode](#13-globs-to-cmdmode)**
 
 A quick way to set terminal mode for one command.
 
