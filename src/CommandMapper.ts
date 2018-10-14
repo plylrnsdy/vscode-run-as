@@ -1,4 +1,4 @@
-import * as micromatch from 'micromatch';
+import * as nanomatch from 'nanomatch';
 import { TerminalOption } from './common/Terminal';
 
 
@@ -83,7 +83,7 @@ export class CommandMapper {
             match2: idToCommandMap;
 
         for (let type of types)
-            if (micromatch.isMatch(path, type.id, MATCH_OPTION)) {
+            if (nanomatch.isMatch(path, type.id, MATCH_OPTION)) {
                 match = type;
                 match2 = type.exceptions && this.searchMap(path, type.exceptions);
                 return match2 || match;

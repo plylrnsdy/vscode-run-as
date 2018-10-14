@@ -3,7 +3,8 @@
 ## 1.8.20
 * Correct the wrong of `README.md` and `CHANGELOG.md`;
 + Can set mode one time for commands on different platforms;
-+ Add 2 modes: `silent` and `block` for running a command in integrated terminal.
++ Add 2 modes: `silent` and `block` for running a command in integrated terminal;
+* Replace `micromatch` with `nanomatch`.
 
 ## 1.8.18
 * Fix cannot run the file which has white space in the first directory of path, like `some words/file.ext`.
