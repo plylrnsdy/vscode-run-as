@@ -3,8 +3,9 @@ import * as vscode from 'vscode';
 const { createTerminal } = vscode.window;
 
 export interface TerminalOption {
-    _cd: string;
-    cwd: string;
+    _filename?: string;
+    _cd?: string;
+    cwd?: string;
 }
 
 export class Terminal {
@@ -31,9 +32,7 @@ export class Terminal {
 
     show() {
         this._terminal.show(false);
-    }
-    hide() {
-        this._terminal.hide();
+        return this;
     }
 
     /**
@@ -42,8 +41,8 @@ export class Terminal {
      * @returns {Terminal} 
      * @memberof Terminal
      */
-    exec(command: string, { _cd, cwd }: TerminalOption): Terminal {
-        if (cwd !== this.cwd) {
+    exec(command: string, { _cd, cwd }: TerminalOption = {}): Terminal {
+        if (cwd && cwd !== this.cwd) {
             this._terminal.sendText(_cd);
         }
         if (command) {

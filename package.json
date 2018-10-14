@@ -25,10 +25,11 @@
         "publish": "npm run compile && vsce publish"
     },
     "dependencies": {
-        "nanomatch": "^1.2.13"
+        "micromatch": "^3.1.10"
     },
     "devDependencies": {
         "@types/chai": "^4.1.2",
+        "@types/micromatch": "^3.1.0",
         "@types/mocha": "^2.2.43",
         "@types/node": "^7.0.43",
         "chai": "^4.1.2",
@@ -50,20 +51,16 @@
         "onCommand:extension.runAs"
     ],
     "contributes": {
-        "commands": [
-            {
-                "title": "%command.runAs.title%",
-                "command": "extension.runAs",
-                "category": "RunAs"
-            }
-        ],
+        "commands": [{
+            "title": "%command.runAs.title%",
+            "command": "extension.runAs",
+            "category": "RunAs"
+        }],
         "menus": {
-            "explorer/context": [
-                {
-                    "command": "extension.runAs",
-                    "group": "navigation@44"
-                }
-            ]
+            "explorer/context": [{
+                "command": "extension.runAs",
+                "group": "navigation@44"
+            }]
         },
         "configuration": {
             "type": "object",
@@ -74,7 +71,11 @@
                     "description": "%RunAs.changeCwd.description%",
                     "default": {
                         "name": "Change Current Working Directory",
-                        "command": "cd /d ${cwd}"
+                        "command": {
+                            "win32": "cd -d ${cwd}",
+                            "linux": "cd ${cwd}",
+                            "darwin": "cd ${cwd}"
+                        }
                     }
                 },
                 "RunAs.runInNewTerminalWindows": {
@@ -92,53 +93,43 @@
                 "RunAs.globsMapToCommand": {
                     "type": "array",
                     "markdownDescription": "%RunAs.globsMapToCommand.description%",
-                    "default": [
-                        {
-                            "globs": "*.*",
-                            "terminal": "silent",
-                            "command": {
-                                "win32": "start ${rPath}",
-                                "linux": "gnome-open ${rPath}",
-                                "darwin": "open ${rPath}"
-                            },
-                            "exceptions": [
-                                {
-                                    "globs": "*.@(bat|cmd|exe)",
-                                    "command": ".\\${rPath}",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.watcher.@(bat|cmd)",
-                                            "command": "@block .\\${rPath}"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "globs": "*.js",
-                                    "command": "node ${rPath}",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.spec.js",
-                                            "command": "mocha ${rPath}"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "globs": "**/@(src|test)/**/*.ts",
-                                    "command": "node ${`out/${dir}/${sFile}.js`}",
-                                    "exceptions": [
-                                        {
-                                            "globs": "*.spec.ts",
-                                            "command": "mocha ${`out/${dir}/${sFile}.js`}"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "globs": "*.py",
-                                    "command": "python ${rPath}"
-                                }
-                            ]
-                        }
-                    ]
+                    "default": [{
+                        "globs": "*.*",
+                        "mode": "silent",
+                        "command": {
+                            "win32": "start ${rPath}",
+                            "linux": "gnome-open ${rPath}",
+                            "darwin": "open ${rPath}"
+                        },
+                        "exceptions": [{
+                            "globs": "*.@(bat|cmd|exe)",
+                            "command": ".\\${rPath}",
+                            "exceptions": [{
+                                "globs": "*.watcher.@(bat|cmd)",
+                                "command": "@block .\\${rPath}"
+                            }, {
+                                "globs": "\\[server\\]*.@(bat|cmd)",
+                                "command": "@out .\\${rPath}"
+                            }]
+                        }, {
+                            "globs": "*.js",
+                            "command": "node ${rPath}",
+                            "exceptions": [{
+                                "globs": "*.spec.js",
+                                "command": "mocha ${rPath}"
+                            }]
+                        }, {
+                            "globs": "**/@(src|test)/**/*.ts",
+                            "command": "node ${`out/${dir}/${sFile}.js`}",
+                            "exceptions": [{
+                                "globs": "*.spec.ts",
+                                "command": "mocha ${`out/${dir}/${sFile}.js`}"
+                            }]
+                        }, {
+                            "globs": "*.py",
+                            "command": "python ${rPath}"
+                        }]
+                    }]
                 }
             }
         }

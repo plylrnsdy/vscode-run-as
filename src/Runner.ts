@@ -11,7 +11,6 @@ import { format } from './util/formatter';
 
 
 const extensionName = 'Run As';
-let id = 1;
 
 export default class Runner {
 
@@ -21,14 +20,18 @@ export default class Runner {
     config: Config = new Config(extensionName.replace(' ', ''));
     commandMapper: CommandMapper = new CommandMapper();
     cmd: Command = new Command(this.commandMapper);
-    terminals = {
-        silent: { exec: (cmd, options) => this.terminal.exec(cmd, options) },
-        in: { exec: (cmd, options) => { this.terminal.show(); this.terminal.exec(cmd, options); } },
-        block: { exec: (cmd, options) => { this.terminal.show(); new Terminal(`${extensionName} ${id++}`).exec(cmd, options) } },
-        out: { exec: (cmd, options) => this.terminal.exec(cmd, options) },
-    } as { [key: string]: { exec: (cmd: string, options: TerminalOption) => void } }
+    modes: { [key: string]: (cmd: string, options: TerminalOption) => void }
 
     constructor() {
+        let silent = (cmd, options) => this.terminal.exec(cmd, options)
+        this.modes = {
+            silent,
+            in: (cmd, options) => this.terminal.show().exec(cmd, options),
+            block: (cmd, options) => new Terminal(`${options._filename} [${extensionName}]`).exec(cmd, options),
+            // block: (cmd, options) => new Terminal(`${options._filename} [${extensionName}]`).show().exec(cmd, options),
+            // => [uncaught exception]: TypeError: Cannot read property 'isWrapped' of undefined. ([issue#54131](https://github.com/Microsoft/vscode/issues/54131))
+            out: silent,
+        }
         this.config.onDidLoad(this.commandMapper.handleConfigLoad());
     }
 
@@ -54,24 +57,24 @@ export default class Runner {
 
     run(path: string): void {
         let fsPath = new Path(path);
-        let root = fsPath.root();
+        let partitions = fsPath.partitions();
+        let root = partitions[1];
+
         let map = this.commandMapper.getMap(fsPath.fsPath());
-        if (!map.terminal) {
-            map.terminal = this.commandMapper.newWindow.enable ? 'out' : 'in';
-        }
-        if (typeof map.terminal === 'string') {
-            if (map.terminal === 'out') {
+        if (!map.exec) {
+            if (map.mode === 'out') {
                 map.command = this.cmd.start(map.command);
             }
-            map.terminal = this.terminals[map.terminal];
+            map.exec = this.modes[map.mode];
         }
-        let cmd = this.cmd.format(map, fsPath);
+
+        let cmd = this.cmd.format(map, partitions);
         let options = {
-            _cd: this.cmd.cd(Path.wrapWhiteSpace(root)),
+            _filename: partitions[5],
+            _cd: this.cmd.cd(Path.wrapWhiteSpace(Path.normalize(root))),
             cwd: root,
         }
-        console.log(cmd)
-        map.terminal.exec(cmd, options);
+        map.exec(cmd, options);
         this.terminal.cwd = root;
     }
 

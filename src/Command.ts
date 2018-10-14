@@ -15,17 +15,12 @@ export default class Command {
         return format(this.mapper.newWindow.command, { command });
     }
 
-    format(map: idToCommandMap, fsPath: Path) {
-        // handle prefix: @in, @out
-        map.command = map.command.replace(/^@(out|in)\s+/, (match, $switch) => {
-            map.terminal = $switch;
-            return '';
-        });
+    format(map: idToCommandMap, partitions: string[]) {
         // handle variables: ${`javascript`}
         return map.command.replace(/\$\{((?:\$\{.*\}|[^}])+)\}/g, (match, script) => {
             try {
-                let [file, root, rPath, dir, lFile, sFile, ext] = fsPath.partitions();
-                return Path.unifiedSeparator(Path.wrapWhiteSpace(eval(script)));
+                let [file, root, rPath, dir, lFile, sFile, ext] = partitions;
+                return Path.wrapWhiteSpace(Path.normalize(eval(script)));
             } catch (e) {
                 throw {
                     type: 'error.commandParsedFail',

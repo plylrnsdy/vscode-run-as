@@ -1,4 +1,4 @@
-import * as nanomatch from 'nanomatch';
+import * as micromatch from 'micromatch';
 import { TerminalOption } from './common/Terminal';
 
 
@@ -21,7 +21,8 @@ type CommandMap = nameToCommandMap | globsToCommandMap;
 export type idToCommandMap = {
     id: string,
     enable?: boolean,
-    terminal?: string | { exec: (cmd: string, options: TerminalOption) => void },
+    mode?: string;
+    exec?: (cmd: string, options: TerminalOption) => void,
     command: string,
     exceptions?: idToCommandMap[]
 };
@@ -74,6 +75,14 @@ export class CommandMapper {
             commandId: map.id,
             message: 'No command in this platform.'
         }
+        if (!map.mode) {
+            map.mode = this.newWindow.enable ? 'out' : 'in';
+            // handle prefix
+            map.command = map.command.replace(/^@(\S+)\s+/, (match, $mode) => {
+                map.mode = $mode;
+                return '';
+            });
+        }
 
         return map;
     }
@@ -83,7 +92,7 @@ export class CommandMapper {
             match2: idToCommandMap;
 
         for (let type of types)
-            if (nanomatch.isMatch(path, type.id, MATCH_OPTION)) {
+            if (micromatch.isMatch(path, type.id, MATCH_OPTION)) {
                 match = type;
                 match2 = type.exceptions && this.searchMap(path, type.exceptions);
                 return match2 || match;
