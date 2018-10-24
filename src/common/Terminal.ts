@@ -15,7 +15,7 @@ export class Terminal {
      * VSCode inner Terminal current working directory
      * @memberof Terminal
      */
-    cwd: string;
+    private _cwd: string;
 
     /**
      * Construct a VSCode inner Terminal named ${name}.
@@ -28,6 +28,7 @@ export class Terminal {
 
     init(): void {
         this._terminal = createTerminal(this.name);
+        this._cwd = undefined;
     }
 
     show() {
@@ -42,8 +43,9 @@ export class Terminal {
      * @memberof Terminal
      */
     exec(command: string, { _cd, cwd }: TerminalOption = {}): Terminal {
-        if (cwd && cwd !== this.cwd) {
+        if (cwd && cwd !== this._cwd) {
             this._terminal.sendText(_cd);
+            this._cwd = cwd;
         }
         if (command) {
             this._terminal.sendText(command);

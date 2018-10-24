@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.21
+* Fix can not changing `cwd` after killed integrated terminal.
+
 ## 1.8.20
 * Correct the wrong of `README.md` and `CHANGELOG.md`;
 + Can set mode one time for commands on different platforms;
