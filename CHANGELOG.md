@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.22
+* `event-stream` package security update. [#event-steam](https://code.visualstudio.com/blogs/2018/11/26/event-stream)
+
 ## 1.8.21
 * Fix can not changing `cwd` after killed integrated terminal.
 
