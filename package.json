@@ -3,7 +3,7 @@
     "displayName": "Run as ...",
     "description": "Right click a file to run as the parameter of command in terminal.",
     "publisher": "plylrnsdy",
-    "version": "1.8.20",
+    "version": "1.8.21",
     "engines": {
         "vscode": "^1.17.0"
     },
@@ -28,14 +28,14 @@
         "micromatch": "^3.1.10"
     },
     "devDependencies": {
-        "@types/chai": "^4.1.2",
+        "@types/chai": "^4.1.7",
         "@types/micromatch": "^3.1.0",
-        "@types/mocha": "^2.2.43",
-        "@types/node": "^7.0.43",
-        "chai": "^4.1.2",
+        "@types/mocha": "^2.2.48",
+        "@types/node": "^7.10.2",
+        "chai": "^4.2.0",
         "mocha": "^5.2.0",
-        "typescript": "^2.5.2",
-        "vscode": "^1.1.21"
+        "typescript": "^2.9.2",
+        "vscode": "^1.1.22"
     },
     "license": "MIT",
     "homepage": "https://github.com/plylrnsdy/vscode-run-as#README.md",

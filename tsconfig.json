@@ -8,10 +8,7 @@
         "removeComments": true
     },
     "include": [
-        "**/*.ts"
-    ],
-    "exclude": [
-        "node_modules",
-        ".vscode-test"
+        "src/**/*.ts",
+        "test/**/*.ts"
     ]
 }

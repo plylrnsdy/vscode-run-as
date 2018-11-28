@@ -1,5 +1,11 @@
 # Change log
 
+## 1.8.22
+* `event-stream` package security update. [#event-steam](https://code.visualstudio.com/blogs/2018/11/26/event-stream)
+
+## 1.8.21
+* Fix can not changing `cwd` after killed integrated terminal.
+
 ## 1.8.20
 * Correct the wrong of `README.md` and `CHANGELOG.md`;
 + Can set mode one time for commands on different platforms;

@@ -75,7 +75,6 @@ export default class Runner {
             cwd: root,
         }
         map.exec(cmd, options);
-        this.terminal.cwd = root;
     }
 
     handleConfigChanged() {
