@@ -16,4 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(...subscriptions);
 }
 
-export function deactivate() { }
+export function deactivate() {
+    subscriptions.forEach(disposable => disposable.dispose());
+    runner = null;
+}
