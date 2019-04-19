@@ -31,11 +31,11 @@
         "@types/chai": "^4.1.7",
         "@types/micromatch": "^3.1.0",
         "@types/mocha": "^2.2.48",
-        "@types/node": "^7.10.2",
+        "@types/node": "^7.10.5",
         "chai": "^4.2.0",
         "mocha": "^5.2.0",
         "typescript": "^2.9.2",
-        "vscode": "^1.1.22"
+        "vscode": "^1.1.33"
     },
     "license": "MIT",
     "homepage": "https://github.com/plylrnsdy/vscode-run-as#README.md",
