@@ -83,8 +83,9 @@ export default class Runner {
 
     handleTerminalClosed() {
         return (closedTerminal: vscode.Terminal) => {
-            if (this.terminal.equals(closedTerminal))
-                this.terminal.init();
+            if (this.terminal.equals(closedTerminal)) {
+                this.terminal.close();
+            }
         }
     }
 }

@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.23
+* Fix can not close terminal "Run As" completely.
+
 ## 1.8.22
 * `event-stream` package security update. [#event-steam](https://code.visualstudio.com/blogs/2018/11/26/event-stream)
 

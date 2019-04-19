@@ -28,7 +28,11 @@ export class Terminal {
 
     init(): void {
         this._terminal = createTerminal(this.name);
-        this._cwd = undefined;
+    }
+
+    close(): void {
+        this._terminal = null;
+        this._cwd = null;
     }
 
     show() {
@@ -43,6 +47,9 @@ export class Terminal {
      * @memberof Terminal
      */
     exec(command: string, { _cd, cwd }: TerminalOption = {}): Terminal {
+        if (this._terminal == null) {
+            this.init();
+        }
         if (cwd && cwd !== this._cwd) {
             this._terminal.sendText(_cd);
             this._cwd = cwd;
