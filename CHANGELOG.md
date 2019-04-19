@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.24
+* Fix can not run file which path contain brackets.
+
 ## 1.8.23
 * Fix can not close terminal "Run As" completely.
 
