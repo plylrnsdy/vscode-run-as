@@ -36,6 +36,9 @@ export class Terminal {
     }
 
     show() {
+        if (this._terminal == null) {
+            this.init();
+        }
         this._terminal.show(false);
         return this;
     }

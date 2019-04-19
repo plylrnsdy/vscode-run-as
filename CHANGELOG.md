@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.25
+* Fix can not reopen after kill integrated terminal.
+
 ## 1.8.24
 * Fix can not run file which path contain brackets.
 
