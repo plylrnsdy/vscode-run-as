@@ -27,9 +27,7 @@ export default class Runner {
         this.modes = {
             silent,
             in: (cmd, options) => this.terminal.show().exec(cmd, options),
-            block: (cmd, options) => new Terminal(`${options._filename} [${extensionName}]`).exec(cmd, options),
-            // block: (cmd, options) => new Terminal(`${options._filename} [${extensionName}]`).show().exec(cmd, options),
-            // => [uncaught exception]: TypeError: Cannot read property 'isWrapped' of undefined. ([issue#54131](https://github.com/Microsoft/vscode/issues/54131))
+            block: (cmd, options) => new Terminal(`${options._filename} [${extensionName}]`).show().exec(cmd, options),
             out: silent,
         }
         this.config.onDidLoad(this.commandMapper.handleConfigLoad());

@@ -1,5 +1,8 @@
 # Change log
 
+## 1.8.26
+* Fix can not show panel when execute command which will block terminal
+
 ## 1.8.25
 * Fix can not reopen after kill integrated terminal.
 

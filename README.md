@@ -127,7 +127,7 @@ Available terminal mode:
 
 1. `silent`: Execute a command in the integrated terminal, but don't show the panel if you had not opened it.
 2. `in`: Execute a command in the integrated terminal, and show the panel for printing the results.
-3. `block`: Execute a command in a *new integrated* terminal for a task which will block the terminal, but don't show the panel if you had not opened it. (Because show the panel by extension will [go wrong](https://github.com/Microsoft/vscode/issues/54131).)
+3. `block`: Execute a command in a *new integrated* terminal for a task which will block the terminal.
 4. `out`: Execute a command in a *new* terminal window out of vscode.
 
 #### 1.4 `globs-to-cmd`.exceptions
