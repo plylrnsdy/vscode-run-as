@@ -30,6 +30,7 @@ export default class Runner {
             block: (cmd, options) => new Terminal(`${options._filename} [${extensionName}]`).show().exec(cmd, options),
             out: silent,
         }
+        this.config.onDidLoad(this.terminal.handleConfigLoad());
         this.config.onDidLoad(this.commandMapper.handleConfigLoad());
     }
 

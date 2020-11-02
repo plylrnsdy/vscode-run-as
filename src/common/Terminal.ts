@@ -1,6 +1,18 @@
 import * as vscode from 'vscode';
 
 const { createTerminal } = vscode.window;
+const { getConfiguration } = vscode.workspace;
+
+const OS_NAME = {
+    win32: 'windows',
+    linux: 'linux',
+    darwin: 'osx',
+}
+const DEFAULT_SHELL = {
+    win32: 'C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\powershell.exe',
+    linux: '/bin/bash',
+    darwin: '/bin/bash',
+}
 
 export interface TerminalOption {
     _filename?: string;
@@ -9,6 +21,8 @@ export interface TerminalOption {
 }
 
 export class Terminal {
+
+    private _shellPath?: string;
 
     private _terminal: vscode.Terminal;
     /**
@@ -22,12 +36,10 @@ export class Terminal {
      * @param {string} name 
      * @memberof Terminal
      */
-    constructor(private name: string) {
-        this.init();
-    }
+    constructor(private name: string) { }
 
     init(): void {
-        this._terminal = createTerminal(this.name);
+        this._terminal = createTerminal(this.name, this._shellPath);
     }
 
     close(): void {
@@ -65,5 +77,17 @@ export class Terminal {
 
     equals(obj): boolean {
         return obj === this._terminal;
+    }
+
+    handleConfigLoad() {
+        return () => {
+            const userShellPath = getConfiguration('terminal').integrated.shell[OS_NAME[process.platform]]
+            this._shellPath = userShellPath ? DEFAULT_SHELL[process.platform] : undefined
+
+            if (this._terminal) {
+                this._terminal.dispose()
+            }
+            this.init()
+        }
     }
 }
