@@ -61,7 +61,7 @@ export default class Path {
      * @static
      */
     static wrapWhiteSpace(path: string): string {
-        return path.match(/[ ()[\]{}]/) ? `"${path}"` : path;
+        return /[ ()[\]{}]/.test(path) ? `"${path}"` : path;
     }
     static normalize(path: string): string {
         // if (process.platform === 'win32') {

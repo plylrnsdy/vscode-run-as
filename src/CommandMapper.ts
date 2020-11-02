@@ -55,15 +55,17 @@ export class CommandMapper {
     }
 
     private formatMaps(maps: CommandMap[]): idToCommandMap[] {
-        for (let map of maps) {
+        for (const map of maps) {
             this.formatMap(map);
-            if ('exceptions' in map) this.formatMaps((map as globsToCommandMap).exceptions);
+            if ('exceptions' in map) {
+                this.formatMaps((map as globsToCommandMap).exceptions);
+            }
         }
         return maps as any as idToCommandMap[];
     }
 
     getMap(path: string): idToCommandMap {
-        let map = this.searchMap(path, this.maps);
+        const map = this.searchMap(path, this.maps);
 
         if (!map) throw {
             type: 'error.noConfiguration',
@@ -91,11 +93,12 @@ export class CommandMapper {
         let match: idToCommandMap,
             match2: idToCommandMap;
 
-        for (let type of types)
+        for (let type of types) {
             if (micromatch.isMatch(path, type.id, MATCH_OPTION)) {
                 match = type;
                 match2 = type.exceptions && this.searchMap(path, type.exceptions);
                 return match2 || match;
             }
+        }
     }
 }

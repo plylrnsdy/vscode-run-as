@@ -10,7 +10,8 @@
             "name": "调试扩展",
             "runtimeExecutable": "${execPath}",
             "args": [
-                "--extensionDevelopmentPath=${workspaceFolder}"
+                "--extensionDevelopmentPath=${workspaceFolder}",
+                "--disable-extensions"
             ],
             "outFiles": [
                 "${workspaceFolder}/out/**/*.js"

@@ -19,7 +19,7 @@ export default class Command {
         // handle variables: ${`javascript`}
         return map.command.replace(/\$\{((?:\$\{.*\}|[^}])+)\}/g, (match, script) => {
             try {
-                let [file, root, rPath, dir, lFile, sFile, ext] = partitions;
+                const [file, root, rPath, dir, lFile, sFile, ext] = partitions;
                 return Path.wrapWhiteSpace(Path.normalize(eval(script)));
             } catch (e) {
                 throw {

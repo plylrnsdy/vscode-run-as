@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
+import get from '../util/get';
 
-const getConfiguration = vscode.workspace.getConfiguration;
+const { getConfiguration } = vscode.workspace;
 
 export default class Config {
 
@@ -19,8 +20,9 @@ export default class Config {
         // load configuration with top namespace
         this.configs = JSON.parse(JSON.stringify(getConfiguration(this.extNamespace)));
         // emit event 'load'
-        for (let callback of this.loadedListeners)
+        for (const callback of this.loadedListeners) {
             callback(this);
+        }
     }
 
     onDidLoad(callback: (config: Config) => void): void {
@@ -30,13 +32,8 @@ export default class Config {
 
     get(sections: string): any {
         // Error: vscode.workspace.getConfiguration('runas.globsMapToCommand') -> {}
-        // Correct: vscode.workspace.getConfiguration('runas').run.globsMapToCommand -> globsToCommandMap[]
-        let _configs = this.configs,
-            _sections: string[] = sections.split('.');
+        // Correct: vscode.workspace.getConfiguration('runas').globsMapToCommand -> globsToCommandMap[]
 
-        for (let i = 0; i < _sections.length; i++)
-            _configs = _configs[_sections[i]];
-
-        return _configs;
+        return get(this.configs, sections)
     }
 }

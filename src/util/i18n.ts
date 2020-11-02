@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as util from 'util';
+import get from './get';
 
 export default class i18n {
 
@@ -7,10 +8,10 @@ export default class i18n {
 
     constructor(private defaultLang: string, lang: string, localePath: string) {
         lang = lang.toLowerCase();
-        let langs = [lang, lang.split('-')[0], defaultLang];
+        const langs = [lang, lang.split('-')[0], defaultLang];
 
-        for (let language of langs) {
-            let langResourcePath = util.format(localePath, language);
+        for (const language of langs) {
+            const langResourcePath = util.format(localePath, language);
             if (fs.existsSync(langResourcePath)) {
                 this.resources = JSON.parse(fs.readFileSync(langResourcePath, 'utf8'));
                 break;
@@ -19,11 +20,6 @@ export default class i18n {
     }
 
     message(sections: string) {
-        let _sections = sections.split('.'),
-            resource = this.resources;
-
-        for (let section of _sections)
-            resource = resource[section];
-        return resource;
+        return get(this.resources, sections);
     }
 }

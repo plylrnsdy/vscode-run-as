@@ -37,8 +37,8 @@ export default class Runner {
     handleCommandRun() {
         return (event?) => {
             try {
-                let editor = vscode.window.activeTextEditor;
-                let path = event
+                const editor = vscode.window.activeTextEditor;
+                const path = event
                     ? event.fsPath
                     : editor && !editor.document.isUntitled
                         ? editor.document.fileName
@@ -48,18 +48,18 @@ export default class Runner {
 
                 this.run(path);
             } catch (error) {
-                let msg = format(this.i18n.message(error.type), error);
+                const msg = format(this.i18n.message(error.type), error);
                 msg ? this.message.error(msg) : console.log(error);
             }
         }
     }
 
     run(path: string): void {
-        let fsPath = new Path(path);
-        let partitions = fsPath.partitions();
-        let root = partitions[1];
+        const fsPath = new Path(path);
+        const partitions = fsPath.partitions();
+        const root = partitions[1];
 
-        let map = this.commandMapper.getMap(fsPath.fsPath());
+        const map = this.commandMapper.getMap(fsPath.fsPath());
         if (!map.exec) {
             if (map.mode === 'out') {
                 map.command = this.cmd.start(map.command);
@@ -67,8 +67,8 @@ export default class Runner {
             map.exec = this.modes[map.mode];
         }
 
-        let cmd = this.cmd.format(map, partitions);
-        let options = {
+        const cmd = this.cmd.format(map, partitions);
+        const options = {
             _filename: partitions[5],
             _cd: this.cmd.cd(Path.wrapWhiteSpace(Path.normalize(root))),
             cwd: root,
